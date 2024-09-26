@@ -23,6 +23,7 @@ node_modules
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.vscode
 
 # misc
 /.sass-cache
@@ -40,3 +41,5 @@ Thumbs.db
 
 .nx/cache
 .nx/workspace-data
+apps/frontend/.env
+apps/backend/.env

@@ -2,7 +2,9 @@
   "name": "@fitfriends/source",
   "version": "0.0.0",
   "license": "MIT",
-  "scripts": {},
+  "scripts": {
+    "postgres:start": "docker compose --file ./apps/backend/docker-compose.dev.yml --env-file ./apps/backend/.env --project-name fitfriends up -d"
+  },
   "private": true,
   "dependencies": {
     "@nestjs/common": "^10.0.2",
