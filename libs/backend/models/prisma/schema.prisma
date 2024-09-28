@@ -6,6 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
+  output = "../../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -70,9 +71,11 @@ model User {
   level          Level
   trainingTypes  TrainingType[] @map("training_types")
   trainingTime   Time
-  caloriesAll    Decimal        @map("calories_all")
-  caloriesPerDay Decimal        @map("calories_per_day")
+  caloriesAll    Int        @map("calories_all")
+  caloriesPerDay Int        @map("calories_per_day")
   ready          Boolean
+
+  @@map("users")
 }
 
 model Training {
@@ -82,25 +85,29 @@ model Training {
   level        Level
   trainingType TrainingType
   trainingTime Time
-  price        Decimal
-  calories     Decimal
+  price        Int
+  calories     Int
   description  String
   sex          Sex
   video        String
-  rating       Decimal      @default(0)
+  rating       Float      @default(0)
   trainer      String
   special      Boolean
   reviews      Review[]
+
+  @@map("trainings")
 }
 
 model Order {
   id          String   @id @default(uuid())
   typeOfOrder String   @default("subscription") @map("type_of_order")
   trainingId  String   @map("training_id")
-  price       Decimal
-  quantity    Decimal
+  price       Int
+  quantity    Int
   payment     Payment
   createdAt   DateTime @default(now()) @map("created_at")
+
+  @@map("orders")
 }
 
 model Balance {
@@ -108,7 +115,9 @@ model Balance {
   userId String
 
   trainingId String
-  quantity   Decimal
+  quantity   Int
+
+  @@map("balances")
 }
 
 model Review {
@@ -116,7 +125,9 @@ model Review {
   userId     String   @map("user_id")
   trainingId String   @map("training_id")
   training   Training @relation(fields: [trainingId], references: [id])
-  rate       Decimal
+  rate       Int
   text       String
   createdAt  DateTime @default(now()) @map("created_at")
+
+  @@map("reviews")
 }
