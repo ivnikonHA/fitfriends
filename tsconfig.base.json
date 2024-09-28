@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@fitfriends/backend-models": ["libs/backend/models/src/index.ts"]
+      "@fitfriends/backend-models": ["libs/backend/models/src/index.ts"],
+      "@fitfriends/helpers": ["libs/shared/helpers/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
