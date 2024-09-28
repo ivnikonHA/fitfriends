@@ -1,1 +1,1 @@
-export * from './lib/helpers';
+export { BcryptHasher } from './lib/hashers/bcrypt.hasher.js';

@@ -1,8 +1,11 @@
-import { faker } from '@faker-js/faker'
-import { Level, Location, PrismaClient, Sex, Time, TrainingType } from '@prisma/client'
+import { faker } from '@faker-js/faker';
+import { genSalt, hash } from 'bcrypt';
+import { Level, Location, PrismaClient, Sex, Time, TrainingType } from '@prisma/client';
 
 const DEFAULT_QUANTITY_OF_TRAININGS = 5;
 const DEFAULT_QUANTITY_OF_USERS = 5;
+const DEFAULT_PASSWORD = '123456';
+const SALT_ROUNDS = 10;
 
 function getTraining() {
   return {
@@ -26,6 +29,11 @@ function getTrainings(count: number) {
   return Array.from({length: count}, getTraining);
 }
 
+async function getPasswordHash(password: string) {
+  const salt = await genSalt(SALT_ROUNDS);
+  return hash(password, salt);
+}
+
 function getUser() {
   const trainigTypes = [
     TrainingType.AEROBICS,
@@ -38,6 +46,7 @@ function getUser() {
   ]
   return {
     name: faker.person.fullName(),
+    passwordHash: DEFAULT_PASSWORD,
     email: faker.internet.email(),
     avatar: faker.image.avatar(),
     sex: faker.helpers.enumValue(Sex),
@@ -68,8 +77,9 @@ async function seedDB(prismaClient: PrismaClient, trainingsQty: number, usersQty
 
   const mockUsers = getUsers(usersQty);
   for(const user of mockUsers) {
+    const passwordHash = await getPasswordHash(user.passwordHash);
     await prismaClient.user.create({
-      data: user
+      data: { ...user, passwordHash }
     })
   }
 

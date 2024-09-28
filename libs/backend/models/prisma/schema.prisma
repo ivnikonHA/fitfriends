@@ -6,7 +6,7 @@
 
 generator client {
   provider = "prisma-client-js"
-  output = "../../../../node_modules/.prisma/client"
+  output   = "../../../../node_modules/.prisma/client"
 }
 
 datasource db {
@@ -60,6 +60,7 @@ enum Payment {
 model User {
   id             String         @id @default(uuid())
   name           String
+  passwordHash   String         @map("password_hash")
   email          String
   avatar         String
   sex            Sex
@@ -71,8 +72,8 @@ model User {
   level          Level
   trainingTypes  TrainingType[] @map("training_types")
   trainingTime   Time
-  caloriesAll    Int        @map("calories_all")
-  caloriesPerDay Int        @map("calories_per_day")
+  caloriesAll    Int            @map("calories_all")
+  caloriesPerDay Int            @map("calories_per_day")
   ready          Boolean
 
   @@map("users")
@@ -90,7 +91,7 @@ model Training {
   description  String
   sex          Sex
   video        String
-  rating       Float      @default(0)
+  rating       Float        @default(0)
   trainer      String
   special      Boolean
   reviews      Review[]
