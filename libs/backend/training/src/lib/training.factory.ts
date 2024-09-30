@@ -30,6 +30,5 @@ export class TrainingFactory implements EntityFactory<TrainingEntity> {
     entity.rating = training.rating;
     entity.trainer = training.trainer;
     entity.special = training.special;
-    entity.reviews = [];
   }
 }

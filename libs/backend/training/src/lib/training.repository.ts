@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 
 import { BasePostgresRepository } from '@fitfriends/data-access';
 import { PrismaClientService } from '@fitfriends/backend-models';
-import { PaginationResult, Review, Training } from '@fitfriends/core';
+import { PaginationResult, Training } from '@fitfriends/core';
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 import { TrainingQuery } from './training.query';
@@ -28,13 +28,14 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
   public async save(entity: TrainingEntity): Promise<TrainingEntity> {
     const record = await this.client.training.create({
       data: {
-        ...entity.toPOJO(),
+        ...entity.toPOJO()
       }
     });
-    return this.createEntityFromDocument(record);
+    entity.id = record.id;
+    return this.createEntityFromDocument(record as Training);
   }
 
-  public async find(query?: TrainingQuery): Promise<PaginationResult<Training>> {
+  public async find(query?: TrainingQuery): Promise<PaginationResult<TrainingEntity>> {
     const skip = query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
     const where: Prisma.TrainingWhereInput = {};
@@ -54,7 +55,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     ]);
 
     return {
-      entities: records.map((record) => this.createEntityFromDocument(record)),
+      entities: records.map((record) => this.createEntityFromDocument(record as Training)),
       currentPage: query?.page,
       totalPages: this.calculateTrainingPage(postCount, take),
       itemsPerPage: take,

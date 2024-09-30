@@ -14,64 +14,21 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-enum Sex {
-  MALE
-  FEMALE
-  DONT_MATTER
-}
-
-enum Location {
-  PIONERSKAYA
-  PETROGRADSKAYA
-  UDELNAYA
-  ZVEZDNAYA
-  SPORTIVNAYA
-}
-
-enum Level {
-  BEGGINER
-  AMATEUR
-  PRO
-}
-
-enum TrainingType {
-  YOGA
-  RUNNING
-  BOX
-  STRETCHING
-  CROSSFIT
-  AEROBICS
-  PILATES
-}
-
-enum Time {
-  SHORT
-  MEDIUM
-  LONG
-  EXTRA
-}
-
-enum Payment {
-  VISA
-  MIR
-  UMONEY
-}
-
 model User {
   id             String         @id @default(uuid())
   name           String
   passwordHash   String         @map("password_hash")
   email          String
   avatar         String
-  sex            Sex
+  sex            String
   dateOfBirth    DateTime?      @map("date_of_birth")
   description    String
-  location       Location
+  location       String
   picture        String
   createdAt      DateTime       @default(now()) @map("created_at")
-  level          Level
-  trainingTypes  TrainingType[] @map("training_types")
-  trainingTime   Time
+  level          String
+  trainingTypes  String[] @map("training_types")
+  trainingTime   String
   caloriesAll    Int            @map("calories_all")
   caloriesPerDay Int            @map("calories_per_day")
   ready          Boolean
@@ -83,18 +40,17 @@ model Training {
   id           String       @id @default(uuid())
   name         String
   picture      String
-  level        Level
-  trainingType TrainingType
-  trainingTime Time
+  level        String
+  trainingType String
+  trainingTime String
   price        Int
   calories     Int
   description  String
-  sex          Sex
+  sex          String
   video        String
   rating       Float        @default(0)
   trainer      String
   special      Boolean
-  reviews      Review[]
 
   @@map("trainings")
 }
@@ -105,7 +61,7 @@ model Order {
   trainingId  String   @map("training_id")
   price       Int
   quantity    Int
-  payment     Payment
+  payment     String
   createdAt   DateTime @default(now()) @map("created_at")
 
   @@map("orders")
@@ -125,7 +81,6 @@ model Review {
   id         String   @id @default(uuid())
   userId     String   @map("user_id")
   trainingId String   @map("training_id")
-  training   Training @relation(fields: [trainingId], references: [id])
   rate       Int
   text       String
   createdAt  DateTime @default(now()) @map("created_at")

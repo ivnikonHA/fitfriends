@@ -1,23 +1,33 @@
 import { faker } from '@faker-js/faker';
 import { genSalt, hash } from 'bcrypt';
-import { Level, Location, PrismaClient, Sex, Time, TrainingType } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
+
+import { Level, Location, Sex, Time, TrainingType } from '../../../shared/core/src/index';
 
 const DEFAULT_QUANTITY_OF_TRAININGS = 5;
 const DEFAULT_QUANTITY_OF_USERS = 5;
 const DEFAULT_PASSWORD = '123456';
 const SALT_ROUNDS = 10;
 
+const enumKeys = (myEnum) => (Object.keys(myEnum).map(key => myEnum[key]).filter(value => typeof value === 'string') as string[])
+
+const level = enumKeys(Level);
+const location = enumKeys(Location);
+const trainingType = enumKeys(TrainingType);
+const trainingTime = enumKeys(Time);
+const sex = enumKeys(Sex);
+
 function getTraining() {
   return {
     name: faker.commerce.productName(),
     picture: faker.system.fileName(),
-    level: faker.helpers.enumValue(Level),
-    trainingType: faker.helpers.enumValue(TrainingType),
-    trainingTime: faker.helpers.enumValue(Time),
+    level: faker.helpers.arrayElement(level),
+    trainingType: faker.helpers.arrayElement(trainingType),
+    trainingTime: faker.helpers.arrayElement(trainingTime),
     price: faker.number.int({max: 10000}),
     calories: faker.number.int({max: 5000}),
     description: faker.lorem.paragraph(),
-    sex: faker.helpers.enumValue(Sex),
+    sex: faker.helpers.arrayElement(sex),
     video: faker.system.filePath(),
     rating: faker.number.float({fractionDigits: 1, max: 10, min: 1}),
     trainer: faker.person.fullName(),
@@ -35,28 +45,19 @@ async function getPasswordHash(password: string) {
 }
 
 function getUser() {
-  const trainigTypes = [
-    TrainingType.AEROBICS,
-    TrainingType.BOX,
-    TrainingType.CROSSFIT,
-    TrainingType.PILATES,
-    TrainingType.RUNNING,
-    TrainingType.STRETCHING,
-    TrainingType.YOGA
-  ]
   return {
     name: faker.person.fullName(),
     passwordHash: DEFAULT_PASSWORD,
     email: faker.internet.email(),
     avatar: faker.image.avatar(),
-    sex: faker.helpers.enumValue(Sex),
+    sex: faker.helpers.arrayElement(sex),
     dateOfBirth: faker.date.birthdate(),
     description: faker.lorem.paragraph(),
-    location: faker.helpers.enumValue(Location),
+    location: faker.helpers.arrayElement(location),
     picture: faker.system.filePath(),
-    level: faker.helpers.enumValue(Level),
-    trainingTypes: faker.helpers.arrayElements<TrainingType>(trainigTypes),
-    trainingTime: faker.helpers.enumValue(Time),
+    level: faker.helpers.arrayElement(level),
+    trainingTypes: faker.helpers.arrayElements(trainingType),
+    trainingTime: faker.helpers.arrayElement(trainingTime),
     caloriesAll: faker.number.int({max: 5000}),
     caloriesPerDay: faker.number.int({max: 1000}),
     ready: faker.datatype.boolean()

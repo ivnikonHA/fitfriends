@@ -1,4 +1,4 @@
-import { Entity, Level, Review, Sex, StorableEntity, Time, Training, TrainingType } from '@fitfriends/core';
+import { Entity, Level, Sex, StorableEntity, Time, Training, TrainingType } from '@fitfriends/core';
 
 export class TrainingEntity extends Entity implements StorableEntity<Training> {
   public name: string;
@@ -14,7 +14,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
   public rating: number;
   public trainer: string;
   public special: boolean;
-  public reviews: Review[];
 
   constructor(training?: Training) {
     super();
@@ -40,7 +39,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
     this.rating = training.rating;
     this.trainer = training.trainer;
     this.special = training.special;
-    this.reviews = [];
   }
 
   public toPOJO(): Training {
@@ -59,7 +57,6 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
       rating: this.rating,
       trainer: this.trainer,
       special: this.special,
-      reviews: this.reviews
     }
   }
 }
