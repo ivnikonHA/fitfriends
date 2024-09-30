@@ -2,7 +2,7 @@ import { IsBoolean, IsEnum, IsNumber, IsOptional, IsString} from 'class-validato
 
 import { Level, Sex, Time, TrainingType} from '@fitfriends/core';
 
-export class CreateTrainingDto {
+export class UpdateTrainingDto {
   @IsString()
   @IsOptional()
   public name: string;

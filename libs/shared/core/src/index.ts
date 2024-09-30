@@ -7,6 +7,8 @@ export { Time } from './lib/types/time.interface';
 export { TrainingType } from './lib/types/training-type.interface';
 export { Training } from './lib/types/training.interface';
 export { User } from './lib/types/user.interface';
+export { SortDirection } from './lib/types/sort-direction.interface';
+export { PaginationResult } from './lib/types/pagination.interface';
 
 export { Entity } from './lib/base/entity';
 export { EntityFactory } from './lib/base/entity-factory.interface';
