@@ -62,4 +62,34 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       totalItems: postCount
     }
   }
+
+  public async findById(id: string): Promise<TrainingEntity> {
+    const document = await this.client.training.findFirst({
+      where: { id }
+    });
+
+    if(!document) {
+      throw new Error(`Training with id: ${id} not found.`);
+    }
+
+    return this.createEntityFromDocument(document as Training);
+  }
+
+  public async deleteById(id: string): Promise<void> {
+    await this.client.training.delete({
+      where: { id }
+    });
+  }
+
+  public async update(entity: TrainingEntity): Promise<TrainingEntity> {
+    const pojoEntity = entity.toPOJO();
+    const record = await this.client.training.update({
+      where: { id: pojoEntity.id },
+      data: {
+        ...pojoEntity
+      }
+    });
+
+    return this.createEntityFromDocument(record as Training);
+  }
 }

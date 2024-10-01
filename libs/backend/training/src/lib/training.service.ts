@@ -1,9 +1,10 @@
 import { Injectable } from '@nestjs/common';
+
 import { TrainingQuery } from './training.query';
 import { TrainingRepository } from './training.repository';
 import { TrainingEntity } from './training.entity';
-import { CreateTrainingDto } from './dto/create-training.dto';
 import { TrainingFactory } from './training.factory';
+import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
 
 @Injectable()
@@ -41,13 +42,19 @@ export class TrainingService {
   }
 
   public async updateTraining(id: string, dto: UpdateTrainingDto) {
-    const post = await this.trainingRepository.findById(id);
-    if(!post) {
+    const training = await this.trainingRepository.findById(id);
+    if(!training) {
       return;
     }
 
-    await this.trainingRepository.update(post);
+    for(const [key, value] of Object.entries(dto)) {
+      if(value !== undefined && training[key] !== value) {
+        training[key] = value;
+      }
+    }
 
-    return post;
+    const result = await this.trainingRepository.update(training);
+
+    return result;
   }
 }

@@ -1,0 +1,40 @@
+# Get trainings
+GET http://localhost:3001/api/training
+
+###
+# Get training by id
+GET http://localhost:3001/api/training/c2d9bf37-0249-4e1f-9bed-8db4d27e2c0e
+
+###
+# Delete training by id
+DELETE  http://localhost:3001/api/training/4ecdcaed-c467-4d91-ad2c-de19f785f07d
+
+###
+# Create training
+POST http://localhost:3001/api/training
+Content-Type: application/json
+
+{
+  "name": "test training",
+  "picture": "picture.jpg",
+  "level": "BEGGINNER",
+  "trainingType": "YOGA",
+  "trainingTime": "SHORT",
+  "price": 10000,
+  "calories": 20000,
+  "description": "This is the test decription.",
+  "sex": "MALE",
+  "video": "video.mp3",
+  "rating": 5.4,
+  "trainer": "Alf",
+  "special": false
+}
+
+###
+# Update training by id
+PATCH http://localhost:3001/api/training/c2d9bf37-0249-4e1f-9bed-8db4d27e2c0e
+Content-Type: application/json
+
+{
+  "level": "PRO"
+}
