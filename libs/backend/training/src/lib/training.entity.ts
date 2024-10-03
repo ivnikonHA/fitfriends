@@ -25,7 +25,7 @@ export class TrainingEntity extends Entity implements StorableEntity<Training> {
       return;
     }
 
-    this.id = training.id ?? undefined;
+    this.id = training.id ?? '';
     this.name = training.name;
     this.picture = training.picture;
     this.level = training.level;
