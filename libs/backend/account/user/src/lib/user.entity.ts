@@ -1,6 +1,7 @@
 import { compare } from 'bcrypt';
 
 import {
+  AuthUser,
   Entity,
   Level,
   Location,
@@ -11,7 +12,7 @@ import {
   User
 } from '@fitfriends/core';
 
-export class UserEntity extends Entity implements StorableEntity<User> {
+export class UserEntity extends Entity implements StorableEntity<AuthUser> {
   public name: string;
   public passwordHash: string;
   public email: string;
@@ -29,12 +30,12 @@ export class UserEntity extends Entity implements StorableEntity<User> {
   public caloriesPerDay: number;
   public ready: boolean;
 
-  constructor(user?: User) {
+  constructor(user?: AuthUser) {
     super();
     this.populate(user);
   }
 
-  public populate(user?: User): void {
+  public populate(user?: AuthUser): void {
     if(!user) {
       return;
     }
@@ -58,7 +59,7 @@ export class UserEntity extends Entity implements StorableEntity<User> {
     this.ready = user.ready;
   }
 
-  public toPOJO(): User {
+  public toPOJO(): AuthUser {
     return {
       id: this.id,
       name: this.name,

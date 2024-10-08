@@ -7,7 +7,6 @@ import { TrainingType } from './training-type.interface';
 export interface User {
   id?: string;
   name: string;
-  passwordHash: string;
   email: string;
   avatar: string;
   sex: Sex;
@@ -15,7 +14,7 @@ export interface User {
   description: string;
   location: Location;
   picture: string;
-  createdAt: Date;
+  createdAt?: Date;
   level: Level;
   trainingTypes: TrainingType[];
   trainingTime: Time;

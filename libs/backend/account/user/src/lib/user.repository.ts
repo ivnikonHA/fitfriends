@@ -27,6 +27,18 @@ export class UserRepository extends BasePostgresRepository<UserEntity, User> {
     return this.createEntityFromDocument(document as User)
   }
 
+  public async findByEmail(email: string): Promise<UserEntity | null> {
+    const document = await this.client.user.findFirst({
+      where: { email }
+    });
+
+    if(!document) {
+      return null;
+    }
+
+    return this.createEntityFromDocument(document as User);
+  }
+
   public async save(entity: UserEntity): Promise<UserEntity> {
     const record = await this.client.user.create({
       data: {
