@@ -2,6 +2,7 @@ import {
   ConflictException,
   HttpException,
   HttpStatus,
+  Inject,
   Injectable,
   Logger,
   NotFoundException,
@@ -16,6 +17,8 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './user.constant';
 import { LoginUserDto } from './dto/login-user.dto';
+import { jwtConfig } from '@fitfriends/config';
+import { ConfigType } from '@nestjs/config';
 
 @Injectable()
 export class UserService {
@@ -24,7 +27,8 @@ export class UserService {
   constructor(
     private readonly userRepository: UserRepository,
     private readonly hasher: BcryptHasher,
-    private readonly jwtService: JwtService
+    private readonly jwtService: JwtService,
+    @Inject(jwtConfig.KEY) private readonly jwtOptions: ConfigType<typeof jwtConfig>
   ) {}
 
   public async register(dto: CreateUserDto): Promise<UserEntity> {
@@ -52,12 +56,25 @@ export class UserService {
     return existUser;
   }
 
+  public async getUserByEmail(email: string) {
+    const user = this.userRepository.findByEmail(email);
+    if(!user) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    return user;
+  }
+
   public async createUserToken(user: User): Promise<Token> {
-    const accessTokenPayload = createJWTPayload(user);
+    const tokenPayload = createJWTPayload(user);
 
     try {
-      const accessToken = await this.jwtService.signAsync(accessTokenPayload);
-      return { accessToken };
+      const accessToken = await this.jwtService.signAsync(tokenPayload);
+      const refreshToken = await this.jwtService.signAsync(tokenPayload, {
+        secret: this.jwtOptions.refreshTokenSecret,
+        expiresIn: this.jwtOptions.refreshTokenExpiresIn
+      });
+      return { accessToken, refreshToken };
     } catch(error) {
       this.logger.error(`[Token generation error: ${error.message}]`);
       throw new HttpException('Token generation error', HttpStatus.INTERNAL_SERVER_ERROR);

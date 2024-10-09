@@ -10,6 +10,7 @@ import { UserRepository } from './user.repository';
 import { LocalStrategy } from './strategies/local.strategy';
 import { BcryptHasher } from '@fitfriends/helpers';
 import { UserFactory } from './user.factory';
+import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
 
 @Module({
   imports: [
@@ -23,6 +24,7 @@ import { UserFactory } from './user.factory';
     UserService,
     BcryptHasher,
     JwtAccessStrategy,
+    JwtRefreshStrategy,
     LocalStrategy,
     UserFactory,
     UserRepository

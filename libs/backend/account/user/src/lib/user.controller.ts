@@ -1,4 +1,4 @@
-import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
 
 import { fillDto } from '@fitfriends/helpers';
 import { UserService } from './user.service';
@@ -7,6 +7,7 @@ import { UserRdo } from './rdo/user.rdo';
 import { RequestWithUser } from './request-with-user.interface';
 import { LoggedUserRdo } from './rdo/logged-user.rdo';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 
 @Controller('user')
 export class UserController {
@@ -25,5 +26,12 @@ export class UserController {
     const accessToken = await this.userService.createUserToken(user);
 
     return fillDto(LoggedUserRdo, {...user?.toPOJO(), accessToken});
+  }
+
+  @UseGuards(JwtRefreshGuard)
+  @Post('refresh')
+  @HttpCode(HttpStatus.OK)
+  public async refresh(@Req() { user }: RequestWithUser) {
+    return this.userService.createUserToken(user);
   }
 }

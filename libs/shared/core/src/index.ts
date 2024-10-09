@@ -4,6 +4,7 @@ export { Level } from './lib/types/level.interface';
 export { Location } from './lib/types/location.interface';
 export { PaginationResult } from './lib/types/pagination.interface';
 export { Payment } from './lib/types/payment.interface';
+export { RefreshTokenPayload } from './lib/types/refresh-token-payload.interface';
 export { Review } from './lib/types/review.interface';
 export { Sex } from './lib/types/sex.interface';
 export { SortDirection } from './lib/types/sort-direction.interface';
