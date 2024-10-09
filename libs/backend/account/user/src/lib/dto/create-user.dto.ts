@@ -44,8 +44,7 @@ export class CreateUserDto {
   @IsEnum(TrainingType, { each: true, message: UserValidationMessage.TrainingTypeWrongType })
   public trainingTypes: TrainingType[];
 
-  @IsArray()
-  @IsEnum(Time, { each: true, message: UserValidationMessage.TrainingTimeWrongType })
+  @IsEnum(Time, { message: UserValidationMessage.TrainingTimeWrongType })
   public trainingTime: Time;
 
   @IsInt({ message: UserValidationMessage.CaloriesWrongType })

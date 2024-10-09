@@ -1,11 +1,20 @@
-import { ConflictException, Injectable, Logger, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import {
+  ConflictException,
+  HttpException,
+  HttpStatus,
+  Injectable,
+  Logger,
+  NotFoundException,
+  UnauthorizedException
+} from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 
-import { BcryptHasher } from '@fitfriends/helpers';
+import { AuthUser, Token, User } from '@fitfriends/core';
+import { BcryptHasher, createJWTPayload } from '@fitfriends/helpers';
 import { UserRepository } from './user.repository';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserEntity } from './user.entity';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './user.constant';
-import { AuthUser } from '@fitfriends/core';
 import { LoginUserDto } from './dto/login-user.dto';
 
 @Injectable()
@@ -14,7 +23,8 @@ export class UserService {
 
   constructor(
     private readonly userRepository: UserRepository,
-    private readonly hasher: BcryptHasher
+    private readonly hasher: BcryptHasher,
+    private readonly jwtService: JwtService
   ) {}
 
   public async register(dto: CreateUserDto): Promise<UserEntity> {
@@ -40,5 +50,17 @@ export class UserService {
     }
 
     return existUser;
+  }
+
+  public async createUserToken(user: User): Promise<Token> {
+    const accessTokenPayload = createJWTPayload(user);
+
+    try {
+      const accessToken = await this.jwtService.signAsync(accessTokenPayload);
+      return { accessToken };
+    } catch(error) {
+      this.logger.error(`[Token generation error: ${error.message}]`);
+      throw new HttpException('Token generation error', HttpStatus.INTERNAL_SERVER_ERROR);
+    }
   }
 }

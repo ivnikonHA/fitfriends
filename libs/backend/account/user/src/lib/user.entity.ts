@@ -8,8 +8,7 @@ import {
   Sex,
   StorableEntity,
   Time,
-  TrainingType,
-  User
+  TrainingType
 } from '@fitfriends/core';
 
 export class UserEntity extends Entity implements StorableEntity<AuthUser> {
@@ -40,6 +39,10 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
       return;
     }
 
+    if(user.createdAt) {
+      this.createdAt = user.createdAt;
+    }
+
     this.id = user.id ?? '';
     this.name = user.name;
     this.passwordHash = user.passwordHash;
@@ -50,7 +53,6 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
     this.description = user.description;
     this.location = user.location;
     this.picture = user.picture;
-    this.createdAt = user.createdAt;
     this.level = user.level;
     this.trainingTypes = user.trainingTypes;
     this.trainingTime = user.trainingTime;

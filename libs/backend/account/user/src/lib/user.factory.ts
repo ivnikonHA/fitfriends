@@ -1,18 +1,18 @@
 import { Injectable } from '@nestjs/common';
 
-import { EntityFactory, User } from '@fitfriends/core';
+import { AuthUser, EntityFactory } from '@fitfriends/core';
 import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserFactory implements EntityFactory<UserEntity> {
-  public create(entityPlainData: User): UserEntity {
+  public create(entityPlainData: AuthUser): UserEntity {
     const entity = new UserEntity();
     this.populate(entity, entityPlainData);
 
     return entity;
   }
 
-  private populate(entity: UserEntity, user: User) {
+  private populate(entity: UserEntity, user: AuthUser) {
     if(!user) {
       return;
     }
@@ -27,10 +27,9 @@ export class UserFactory implements EntityFactory<UserEntity> {
     entity.description = user.description;
     entity.location = user.location;
     entity.picture = user.picture;
-    entity.createdAt = user.createdAt;
     entity.level = user.level;
     entity.trainingTypes = user.trainingTypes;
-    entity.trainingTime = user.trainigTime;
+    entity.trainingTime = user.trainingTime;
     entity.caloriesAll = user.caloriesAll;
     entity.caloriesPerDay = user.caloriesPerDay;
     entity.ready = user.ready;
