@@ -8,6 +8,7 @@ import { PrismaClientModule } from '@fitfriends/backend-models';
 @Module({
   imports: [PrismaClientModule],
   controllers: [TrainingController],
-  providers: [TrainingService, TrainingRepository, TrainingFactory]
+  providers: [TrainingService, TrainingRepository, TrainingFactory],
+  exports: [TrainingService]
 })
 export class TrainingModule {}

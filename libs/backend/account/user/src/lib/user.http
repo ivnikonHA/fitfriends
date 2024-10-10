@@ -24,7 +24,7 @@ POST http://localhost:3001/api/user/login
 Content-Type: application/json
 
 {
-  "email": "keks@keks.ca",
+  "email": "ivnikon@mail.ru",
   "password": "12345678"
 }
 ###
@@ -33,5 +33,5 @@ POST http://localhost:3001/api/user/refresh HTTP/1.1
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6Imtla3NAa2Vrcy5jYSIsIm5hbWUiOiJLZWtzIiwidG9rZW5JZCI6IjIwNTc2ZDU1LTg3NmItNGU5MC1iZjQ0LTc3ZDM1NTk2OWY3MyIsImlhdCI6MTcyODU3Nzc0MCwiZXhwIjoxNzMxMTY5NzQwfQ.4vjhuaLnNMTtPK8sEGRaUXnGw0f8_B7WNdz1vrzV4m4
 ###
 # Get user by id
-GET http://localhost:3001/api/user/
+GET http://localhost:3001/api/user/bb6b9efd-ac52-46ec-b1c1-c6eb808a7b18
 ###

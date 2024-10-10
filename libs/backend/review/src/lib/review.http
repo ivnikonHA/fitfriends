@@ -1,0 +1,12 @@
+# Get reviews for training
+GET http://localhost:3001/api/training/3a5a8f5a-0fa3-4062-aa10-28ae479d300f/reviews
+###
+# Create review
+POST http://localhost:3001/api/training/3a5a8f5a-0fa3-4062-aa10-28ae479d300f/reviews
+Content-Type: application/json
+
+{
+  "userId": "bb6b9efd-ac52-46ec-b1c1-c6eb808a7b18",
+  "rate": 4,
+  "text": "Равным образом, высокое качество позиционных исследований однозначно фиксирует необходимость укрепления моральных ценностей. Как принято считать, реплицированные с зарубежных источников, современные исследования могут быть п"
+}
