@@ -42,8 +42,9 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
     if(user.createdAt) {
       this.createdAt = user.createdAt;
     }
-
-    this.id = user.id ?? '';
+    if(user.id) {
+      this.id = user.id;
+    }
     this.name = user.name;
     this.passwordHash = user.passwordHash;
     this.email = user.email;

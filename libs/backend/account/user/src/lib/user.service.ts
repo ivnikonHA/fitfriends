@@ -67,6 +67,15 @@ export class UserService {
     return user;
   }
 
+  public async getUserById(id: string) {
+    const user = this.userRepository.findById(id);
+    if(!user) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    return user;
+  }
+
   public async createUserToken(user: User): Promise<Token> {
     const accessTokenPayload = createJWTPayload(user);
     const refreshTokenPayload = { ...accessTokenPayload, tokenId: crypto.randomUUID() };

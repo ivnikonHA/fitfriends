@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Req, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards } from '@nestjs/common';
 
 import { fillDto } from '@fitfriends/helpers';
 import { UserService } from './user.service';
@@ -33,5 +33,11 @@ export class UserController {
   @HttpCode(HttpStatus.OK)
   public async refresh(@Req() { user }: RequestWithUser) {
     return this.userService.createUserToken(user);
+  }
+
+  @Get(':id')
+  public async show(@Param('id') id: string) {
+    const user = await this.userService.getUserById(id);
+    return fillDto(UserRdo, user);
   }
 }
