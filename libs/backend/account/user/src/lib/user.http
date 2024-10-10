@@ -24,6 +24,10 @@ POST http://localhost:3001/api/user/login
 Content-Type: application/json
 
 {
-  "email": "Allene.Waelchi@gmail.com",
-  "password": "123456"
+  "email": "keks@keks.ca",
+  "password": "12345678"
 }
+###
+# Get new JWT pair
+POST http://localhost:3001/api/user/refresh HTTP/1.1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIiLCJlbWFpbCI6Imtla3NAa2Vrcy5jYSIsIm5hbWUiOiJLZWtzIiwidG9rZW5JZCI6IjIwNTc2ZDU1LTg3NmItNGU5MC1iZjQ0LTc3ZDM1NTk2OWY3MyIsImlhdCI6MTcyODU3Nzc0MCwiZXhwIjoxNzMxMTY5NzQwfQ.4vjhuaLnNMTtPK8sEGRaUXnGw0f8_B7WNdz1vrzV4m4

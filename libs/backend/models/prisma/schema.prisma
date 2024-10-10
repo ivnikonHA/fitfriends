@@ -15,29 +15,29 @@ datasource db {
 }
 
 model User {
-  id             String         @id @default(uuid())
+  id             String    @id @default(uuid())
   name           String
-  passwordHash   String         @map("password_hash")
+  passwordHash   String    @map("password_hash")
   email          String
   avatar         String
   sex            String
-  dateOfBirth    DateTime?      @map("date_of_birth")
+  dateOfBirth    DateTime? @map("date_of_birth")
   description    String
   location       String
   picture        String
-  createdAt      DateTime       @default(now()) @map("created_at")
+  createdAt      DateTime  @default(now()) @map("created_at")
   level          String
-  trainingTypes  String[] @map("training_types")
+  trainingTypes  String[]  @map("training_types")
   trainingTime   String
-  caloriesAll    Int            @map("calories_all")
-  caloriesPerDay Int            @map("calories_per_day")
+  caloriesAll    Int       @map("calories_all")
+  caloriesPerDay Int       @map("calories_per_day")
   ready          Boolean
 
   @@map("users")
 }
 
 model Training {
-  id           String       @id @default(uuid())
+  id           String  @id @default(uuid())
   name         String
   picture      String
   level        String
@@ -48,7 +48,7 @@ model Training {
   description  String
   sex          String
   video        String
-  rating       Float        @default(0)
+  rating       Float   @default(0)
   trainer      String
   special      Boolean
 
@@ -86,4 +86,13 @@ model Review {
   createdAt  DateTime @default(now()) @map("created_at")
 
   @@map("reviews")
+}
+
+model RefreshToken {
+  createdAt DateTime @default(now()) @map("created_at")
+  tokenId   String   @id @map("token_id")
+  userId    String   @map("user_id")
+  expiresIn DateTime @map("expiresIn")
+
+  @@map("refresh_token")
 }

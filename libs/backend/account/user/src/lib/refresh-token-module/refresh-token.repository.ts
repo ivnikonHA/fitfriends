@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 
 import { RefreshTokenEntity } from './refresh-token.entity';
 import { RefreshTokenFactory } from './refresh-token.factory';
@@ -15,16 +15,40 @@ export class RefreshTokenRepository extends BasePostgresRepository<RefreshTokenE
     super(entityFactory, client);
   }
 
+  public async save(entity: RefreshTokenEntity): Promise<RefreshTokenEntity> {
+      const document = await this.client.refreshToken.create({
+        data: { ...entity.toPOJO()}
+      });
+
+      if(!document) {
+        throw new Error(`Error creating refresh token`);
+      }
+
+      return this.createEntityFromDocument(document as JwtToken);
+  }
+
   public async deleteByTokenId(tokenId: string) {
-    return this.model.deleteOne({ tokenId }).exec();
+    return this.client.refreshToken.delete({
+      where: { tokenId }
+    });
   }
 
   public async findByTokenId(tokenId: string): Promise<RefreshTokenEntity | null> {
-    const document = await this.model.findOne({ tokenId }).exec();
-    return this.createEntityFromDocument(document);
+    const document = await this.client.refreshToken.findFirst({
+      where: { tokenId }
+    });
+    if(!document) {
+      throw new NotFoundException(`Refresh token with ${tokenId} not found.`);
+    }
+
+    return this.createEntityFromDocument(document as JwtToken);
   }
 
   public async deleteExpiredTokens(): Promise<void> {
-    await this.model.deleteMany({ expiresIn: {$lt: new Date()}});
+    await this.client.refreshToken.deleteMany({
+      where: {
+        expiresIn: { lt: new Date()}
+      }
+    });
   }
 }

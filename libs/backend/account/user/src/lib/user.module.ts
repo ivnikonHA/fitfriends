@@ -11,13 +11,15 @@ import { LocalStrategy } from './strategies/local.strategy';
 import { BcryptHasher } from '@fitfriends/helpers';
 import { UserFactory } from './user.factory';
 import { JwtRefreshStrategy } from './strategies/jwt-refresh.strategy';
+import { RefreshTokenModule } from './refresh-token-module/refresh-token.module';
 
 @Module({
   imports: [
     JwtModule.registerAsync({
       inject: [ConfigService],
       useFactory: getJwtOptions
-    })
+    }),
+    RefreshTokenModule
   ],
   controllers: [UserController],
   providers: [

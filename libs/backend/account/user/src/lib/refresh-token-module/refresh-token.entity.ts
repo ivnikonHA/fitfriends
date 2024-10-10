@@ -16,7 +16,6 @@ export class RefreshTokenEntity extends Entity implements StorableEntity<JwtToke
       return;
     }
 
-    this.id = token.id ?? '';
     this.createdAt = token.createdAt;
     this.expiresIn = token.expiresIn;
     this.userId = token.userId;
@@ -25,7 +24,6 @@ export class RefreshTokenEntity extends Entity implements StorableEntity<JwtToke
 
   public toPOJO(): JwtToken {
     return {
-      id: this.id,
       createdAt: this.createdAt,
       expiresIn: this.expiresIn,
       userId: this.userId,

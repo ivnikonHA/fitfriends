@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@nestjs/common';
 import { ConfigType } from '@nestjs/config';
 import dayjs from 'dayjs';
 
-import { jwtConfig } from '@users/config';
-import { RefreshTokenPayload } from '@project/core';
-import { parseTime } from '@project/helpers';
+import { jwtConfig } from '@fitfriends/config';
+import { RefreshTokenPayload } from '@fitfriends/core';
+import { parseTime } from '@fitfriends/helpers';
 
 import { RefreshTokenRepository } from './refresh-token.repository';
 import { RefreshTokenEntity } from './refresh-token.entity';
