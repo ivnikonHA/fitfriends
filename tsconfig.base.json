@@ -16,6 +16,7 @@
     "baseUrl": ".",
     "paths": {
       "@fitfriends/backend-models": ["libs/backend/models/src/index.ts"],
+      "@fitfriends/balance": ["libs/backend/balance/src/index.ts"],
       "@fitfriends/config": ["libs/backend/config/src/index.ts"],
       "@fitfriends/core": ["libs/shared/core/src/index.ts"],
       "@fitfriends/data-access": ["libs/shared/data-access/src/index.ts"],

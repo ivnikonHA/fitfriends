@@ -1,4 +1,5 @@
 export { AuthUser } from './lib/types/auth-user.interface';
+export { Balance } from './lib/types/balance.interface';
 export { JwtToken } from './lib/types/jwt-token.interface';
 export { Level } from './lib/types/level.interface';
 export { Location } from './lib/types/location.interface';
