@@ -19,8 +19,8 @@ export class ReviewService {
     return this.reviewRepository.findByTrainingId(trainingId);
   }
 
-  public async create(trainingId: string, dto: CreateReviewDto): Promise<ReviewEntity> {
-    const existUser = await this.userService.getUserById(dto.userId);
+  public async create(userId: string, trainingId: string, dto: CreateReviewDto): Promise<ReviewEntity> {
+    const existUser = await this.userService.getUserById(userId);
     const existTraining = await this.trainingService.getTraining(trainingId);
     const newReview = this.reviewFactory.createFromDto(dto, existTraining.id, existUser.id);
 
