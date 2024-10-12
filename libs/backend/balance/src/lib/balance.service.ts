@@ -2,12 +2,14 @@ import { Injectable, NotFoundException } from '@nestjs/common';
 import { BalanceRepository } from './balance.repository';
 import { BalanceEntity } from './balance.entity';
 import { BalanceFactory } from './balance.factory';
+import { TrainingService } from '@fitfriends/training';
 
 @Injectable()
 export class BalanceService {
   constructor(
     private readonly balanceRepository: BalanceRepository,
-    private readonly balanceFactory: BalanceFactory
+    private readonly balanceFactory: BalanceFactory,
+    private readonly trainingService: TrainingService
   ) {}
 
   public async getBalance(userId: string): Promise<BalanceEntity[]> {
@@ -15,14 +17,15 @@ export class BalanceService {
   }
 
   public async increaseBalance(userId: string, trainingId: string, quantity: number) {
+    const existTraining = await this.trainingService.getTraining(trainingId);
     let updatedBalance: BalanceEntity;
-    const balanceEntry = await this.balanceRepository.findBalanceEntry(userId, trainingId);
+    const balanceEntry = await this.balanceRepository.findBalanceEntry(userId, existTraining.id);
 
     if(balanceEntry) {
       balanceEntry.quantity += quantity;
       updatedBalance = await this.balanceRepository.update(balanceEntry);
     } else {
-      const newBalanceEntry = this.balanceFactory.create({userId, trainingId, quantity});
+      const newBalanceEntry = this.balanceFactory.create({userId, trainingId: existTraining.id, quantity});
       updatedBalance = await this.balanceRepository.save(newBalanceEntry);
     }
 

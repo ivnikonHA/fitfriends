@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { Prisma } from '@prisma/client';
 
 import { BasePostgresRepository } from '@fitfriends/data-access';
@@ -69,7 +69,7 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     });
 
     if(!document) {
-      throw new Error(`Training with id: ${id} not found.`);
+      throw new NotFoundException(`Training with id: ${id} not found.`);
     }
 
     return this.createEntityFromDocument(document as Training);

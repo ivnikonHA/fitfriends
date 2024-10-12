@@ -32,7 +32,6 @@ export class BalanceController {
     @Req() { user }: RequestWithPayload,
     @Body() {trainingId, quantity}: IncreaseBalanceDto
   ) {
-    console.log(user)
     return this.balanceService.increaseBalance(user.sub, trainingId, quantity);
   }
 
