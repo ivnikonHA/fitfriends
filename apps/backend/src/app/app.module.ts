@@ -7,6 +7,7 @@ import { FitFriendsConfigModule } from '@fitfriends/config';
 import { UserModule } from '@fitfriends/user';
 import { ReviewModule } from '@fitfriends/review';
 import { BalanceModule } from '@fitfriends/balance';
+import { OrderModule } from '@fitfriends/order';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { BalanceModule } from '@fitfriends/balance';
     FitFriendsConfigModule,
     UserModule,
     ReviewModule,
-    BalanceModule
+    BalanceModule,
+    OrderModule
   ],
   controllers: [AppController],
   providers: [AppService],

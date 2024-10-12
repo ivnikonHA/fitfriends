@@ -21,6 +21,7 @@
       "@fitfriends/core": ["libs/shared/core/src/index.ts"],
       "@fitfriends/data-access": ["libs/shared/data-access/src/index.ts"],
       "@fitfriends/helpers": ["libs/shared/helpers/src/index.ts"],
+      "@fitfriends/order": ["libs/backend/order/src/index.ts"],
       "@fitfriends/review": ["libs/backend/review/src/index.ts"],
       "@fitfriends/training": ["libs/backend/training/src/index.ts"],
       "@fitfriends/user": ["libs/backend/account/user/src/index.ts"]

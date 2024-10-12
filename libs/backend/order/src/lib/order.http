@@ -1,0 +1,15 @@
+#Get orders
+GET http://localhost:3001/api/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjZiOWVmZC1hYzUyLTQ2ZWMtYjFjMS1jNmViODA4YTdiMTgiLCJlbWFpbCI6Iml2bmlrb25AbWFpbC5ydSIsIm5hbWUiOiJOaWNrIiwiaWF0IjoxNzI4NzI5MTE0LCJleHAiOjE3Mjg3Mjk0MTR9.Lj5Orq8vbhv6hLBgxo_e78Y_sDdF2mlmmY2teAqDEHM
+###
+# Create order
+POST http://localhost:3001/api/order
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJiYjZiOWVmZC1hYzUyLTQ2ZWMtYjFjMS1jNmViODA4YTdiMTgiLCJlbWFpbCI6Iml2bmlrb25AbWFpbC5ydSIsIm5hbWUiOiJOaWNrIiwiaWF0IjoxNzI4NzI5MTE0LCJleHAiOjE3Mjg3Mjk0MTR9.Lj5Orq8vbhv6hLBgxo_e78Y_sDdF2mlmmY2teAqDEHM
+Content-Type: application/json
+
+{
+  "trainingId": "3a5a8f5a-0fa3-4062-aa10-28ae479d300f",
+  "price": 10000,
+  "quantity": 8,
+  "payment": "visa"
+}

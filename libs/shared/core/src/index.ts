@@ -3,6 +3,7 @@ export { Balance } from './lib/types/balance.interface';
 export { JwtToken } from './lib/types/jwt-token.interface';
 export { Level } from './lib/types/level.interface';
 export { Location } from './lib/types/location.interface';
+export { Order } from './lib/types/order.interface';
 export { PaginationResult } from './lib/types/pagination.interface';
 export { Payment } from './lib/types/payment.interface';
 export { RefreshTokenPayload } from './lib/types/refresh-token-payload.interface';
