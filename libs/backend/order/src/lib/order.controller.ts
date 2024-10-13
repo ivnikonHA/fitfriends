@@ -5,7 +5,9 @@ import { fillDto } from '@fitfriends/helpers';
 import { OrderRdo } from './rdo/order.rdo';
 import { CreateOrderDto } from './dto/create-order.dto';
 import { BalanceService } from '@fitfriends/balance';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Заказы')
 @Controller('order')
 export class OrderController {
   constructor(
@@ -13,6 +15,10 @@ export class OrderController {
     private readonly balanceService: BalanceService
   ) {}
 
+  @ApiOperation({
+    summary: 'Получить список заказов пользователя'
+  })
+  @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Get('/')
   public async index(@Req() { user }: RequestWithPayload) {
@@ -21,6 +27,10 @@ export class OrderController {
     return fillDto(OrderRdo, orders.map((order) => order.toPOJO()));
   }
 
+  @ApiOperation({
+    summary: 'Создать заказ'
+  })
+  @ApiBearerAuth('access-token')
   @UseGuards(JwtAuthGuard)
   @Post('/')
   public async create(@Req() { user }: RequestWithPayload, @Body() dto: CreateOrderDto) {
