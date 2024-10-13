@@ -96,3 +96,16 @@ model RefreshToken {
 
   @@map("refresh_token")
 }
+
+model File {
+  id           String   @id @default(uuid())
+  originalName String   @map("original_name")
+  subDirectory String   @map("sub_directory")
+  size         Int
+  mimetype     String
+  hashName     String   @map("hash_name")
+  path         String
+  createdAt    DateTime @default(now()) @map("created_at")
+
+  @@map("files")
+}

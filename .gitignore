@@ -43,3 +43,4 @@ Thumbs.db
 .nx/workspace-data
 apps/frontend/.env
 apps/backend/.env
+**/uploads/*

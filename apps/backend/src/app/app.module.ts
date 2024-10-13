@@ -8,6 +8,7 @@ import { UserModule } from '@fitfriends/user';
 import { ReviewModule } from '@fitfriends/review';
 import { BalanceModule } from '@fitfriends/balance';
 import { OrderModule } from '@fitfriends/order';
+import { FileUploaderModule } from '@fitfriends/file-uploader';
 
 @Module({
   imports: [
@@ -16,7 +17,8 @@ import { OrderModule } from '@fitfriends/order';
     UserModule,
     ReviewModule,
     BalanceModule,
-    OrderModule
+    OrderModule,
+    FileUploaderModule
   ],
   controllers: [AppController],
   providers: [AppService],

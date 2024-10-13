@@ -1,0 +1,16 @@
+# Upload some file
+POST http://localhost:3001/api/files/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=boundary
+
+--boundary
+Content-Disposition: form-data; name="file"; filename="app-module.ts"
+
+< ../index.ts
+
+--boundary--
+
+###
+# Get file by ID
+GET http://localhost:3001/api/files/4aaf90e4-7d90-450c-8b13-a04f21e366b6 HTTP/1.1
+
+###
