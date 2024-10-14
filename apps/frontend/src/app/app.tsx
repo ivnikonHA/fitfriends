@@ -1,13 +1,22 @@
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import styles from './app.module.css';
+import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } from 'react-router-dom';
+import { HelmetProvider } from 'react-helmet-async';
 
-import NxWelcome from './nx-welcome';
+import { AppRoute } from '../consts';
+import { MainPage } from '../pages/main';
 
-export function App() {
+function App(): JSX.Element {
+  const router = createBrowserRouter(
+    createRoutesFromElements(
+      <Route path='/'>
+        <Route path={AppRoute.Main} element={<MainPage />} />
+      </Route>
+    )
+  )
+
   return (
-    <div>
-      <NxWelcome title="frontend" />
-    </div>
+    <HelmetProvider>
+      <RouterProvider router={router} />
+    </HelmetProvider>
   );
 }
 
