@@ -1,8 +1,8 @@
-import { Header } from '../components/header/header';
-import { LookForCompany } from '../components/main/look-for-company';
-import { PopularTrainings } from '../components/main/popular-trainings';
-import { SpecialForYou } from '../components/main/special-for-you';
-import { SpecialOffers } from '../components/main/special-offers';
+import { Header } from '../../components/header/header';
+import { LookForCompany } from '../../components/main/look-for-company';
+import { PopularTrainings } from '../../components/main/popular-trainings';
+import { SpecialForYou } from '../../components/main/special-for-you';
+import { SpecialOffers } from '../../components/main/special-offers';
 
 export function MainPage(): JSX.Element {
   return (
