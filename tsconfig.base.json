@@ -17,15 +17,18 @@
     "paths": {
       "@fitfriends/backend-models": ["libs/backend/models/src/index.ts"],
       "@fitfriends/balance": ["libs/backend/balance/src/index.ts"],
+      "@fitfriends/components": ["libs/frontend/components/src/index.ts"],
       "@fitfriends/config": ["libs/backend/config/src/index.ts"],
       "@fitfriends/core": ["libs/shared/core/src/index.ts"],
       "@fitfriends/data-access": ["libs/shared/data-access/src/index.ts"],
       "@fitfriends/file-uploader": ["libs/backend/file-uploader/src/index.ts"],
       "@fitfriends/helpers": ["libs/shared/helpers/src/index.ts"],
       "@fitfriends/order": ["libs/backend/order/src/index.ts"],
+      "@fitfriends/pages": ["libs/frontend/pages/src/index.ts"],
       "@fitfriends/review": ["libs/backend/review/src/index.ts"],
       "@fitfriends/training": ["libs/backend/training/src/index.ts"],
-      "@fitfriends/user": ["libs/backend/account/user/src/index.ts"]
+      "@fitfriends/user": ["libs/backend/account/user/src/index.ts"],
+      "@fitfriends/utils": ["libs/frontend/utils/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
