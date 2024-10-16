@@ -26,6 +26,7 @@
       "@fitfriends/order": ["libs/backend/order/src/index.ts"],
       "@fitfriends/pages": ["libs/frontend/pages/src/index.ts"],
       "@fitfriends/review": ["libs/backend/review/src/index.ts"],
+      "@fitfriends/services": ["libs/frontend/services/src/index.ts"],
       "@fitfriends/training": ["libs/backend/training/src/index.ts"],
       "@fitfriends/user": ["libs/backend/account/user/src/index.ts"],
       "@fitfriends/utils": ["libs/frontend/utils/src/index.ts"]
