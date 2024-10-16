@@ -23,6 +23,7 @@
       "@fitfriends/data-access": ["libs/shared/data-access/src/index.ts"],
       "@fitfriends/file-uploader": ["libs/backend/file-uploader/src/index.ts"],
       "@fitfriends/helpers": ["libs/shared/helpers/src/index.ts"],
+      "@fitfriends/hooks": ["libs/frontend/hooks/src/index.ts"],
       "@fitfriends/order": ["libs/backend/order/src/index.ts"],
       "@fitfriends/pages": ["libs/frontend/pages/src/index.ts"],
       "@fitfriends/review": ["libs/backend/review/src/index.ts"],
