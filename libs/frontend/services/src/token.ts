@@ -10,6 +10,7 @@ const getToken = (): Token => {
 };
 
 const saveToken = (token: Token): void => {
+  console.log('Save token: ', token)
   localStorage.setItem(AUTH_TOKEN_KEY_NAME, token.accessToken);
   localStorage.setItem(REFRESH_TOKEN_KEY_NAME, token.refreshToken);
 };

@@ -7,7 +7,6 @@ import { getAuthorizationStatus } from '@fitfriends/store';
 
 export function Intro() {
   const authorized = useAppSelector(getAuthorizationStatus);
-  console.log(authorized)
   if(authorized === AuthorizationStatus.Auth) {
     return <Navigate to={AppRoute.Main} />;
   }

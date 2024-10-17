@@ -1,7 +1,33 @@
 //import styles from './login.module.css';
+import { FormEvent, useState } from 'react';
 import { Form } from 'react-router-dom';
 
+import { useAppDispatch } from '@fitfriends/hooks';
+import { ChangeHandler, loginAction } from '@fitfriends/store';
+import { LoginUserDto } from '@fitfriends/user';
+
 export function Login() {
+  const dispatch = useAppDispatch();
+
+  const [formData, setFormData] = useState({
+    email: '',
+    password: ''
+  });
+
+  const handleFieldChange: ChangeHandler = (evt) => {
+    const { name, value } = evt.currentTarget;
+    setFormData({ ...formData, [name]: value });
+  };
+
+  const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const dto: LoginUserDto = {
+      email: formData.email,
+      password: formData.password
+    };
+    dispatch(loginAction(dto))
+  }
+
   return (
     <div className="wrapper">
       <main>
@@ -20,16 +46,32 @@ export function Login() {
                 <h1 className="popup-form__title">Вход</h1>
               </div>
               <div className="popup-form__form">
-                <Form method="post">
+                <Form method="post" onSubmit={handleSubmitForm}>
                   <div className="sign-in">
                     <div className="custom-input sign-in__input">
-                      <label><span className="custom-input__label">E-mail</span><span className="custom-input__wrapper">
-                          <input type="email" name="email" /></span>
+                      <label>
+                        <span className="custom-input__label">E-mail</span>
+                        <span className="custom-input__wrapper">
+                          <input
+                            type="email"
+                            name="email"
+                            onChange={handleFieldChange}
+                            value={formData.email}
+                          />
+                        </span>
                       </label>
                     </div>
                     <div className="custom-input sign-in__input">
-                      <label><span className="custom-input__label">Пароль</span><span className="custom-input__wrapper">
-                          <input type="password" name="password" /></span>
+                      <label>
+                        <span className="custom-input__label">Пароль</span>
+                        <span className="custom-input__wrapper">
+                          <input
+                            type="password"
+                            name="password"
+                            onChange={handleFieldChange}
+                            value={formData.password}
+                          />
+                        </span>
                       </label>
                     </div>
                     <button className="btn sign-in__button" type="submit">Продолжить</button>

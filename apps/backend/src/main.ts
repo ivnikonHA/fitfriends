@@ -22,6 +22,7 @@ async function bootstrap() {
 
   app.setGlobalPrefix(GLOBAL_PREFIX);
   app.useGlobalPipes(new ValidationPipe({ transform: true }));
+  app.enableCors();
 
   const configService = app.get(ConfigService);
   const port = configService.get('application.port');

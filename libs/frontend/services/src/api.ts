@@ -9,8 +9,6 @@ export const createAPI = (): AxiosInstance => {
     timeout: REQUEST_TIMEOUT
   });
 
-
-
   api.interceptors.request.use(
     (config) => {
       const { accessToken } = getToken();
@@ -30,11 +28,12 @@ export const createAPI = (): AxiosInstance => {
         originalRequest._retry = true;
 
         try {
-          const response = await axios.post(APIRoute.Refresh, { refreshToken });
-          const { token } = response.data;
+          const response = await axios.post(`${BACKEND_URL}/${APIRoute.Refresh}`, { refreshToken });
+          const token = response.data;
           saveToken(token);
           originalRequest.headers[TOKEN_HEADER] = `Bearer ${token.accessToken}`;
-          return axios(originalRequest);
+          console.log(originalRequest)
+          return api(originalRequest);
         } catch(error) {
           throw new Error(error.message);
         }

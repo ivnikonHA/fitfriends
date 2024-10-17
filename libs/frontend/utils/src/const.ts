@@ -26,7 +26,7 @@ export const enum AuthorizationStatus {
   Unknown = 'UNKNOWN'
 }
 
-export const BACKEND_URL = "http://localhost:3001";
+export const BACKEND_URL = "http://localhost:3001/api";
 export const UPLOAD_PATH = "/upload/";
 export const REQUEST_TIMEOUT = 5000;
 export const TOKEN_HEADER = "authorization";

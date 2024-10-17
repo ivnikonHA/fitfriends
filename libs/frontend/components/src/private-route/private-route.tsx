@@ -2,17 +2,19 @@
 import { Navigate } from 'react-router-dom';
 
 import { AppRoute, AuthorizationStatus } from '@fitfriends/utils';
+import { useAppSelector } from '@fitfriends/hooks';
+import { getAuthorizationStatus } from '@fitfriends/store';
 
 type PrivateRouteProps = {
-  authorizationStatus: AuthorizationStatus;
   children: JSX.Element;
 }
 
-export function PrivateRoute({authorizationStatus, children}: PrivateRouteProps): JSX.Element {
+export function PrivateRoute({children}: PrivateRouteProps): JSX.Element {
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
   return (
     authorizationStatus === AuthorizationStatus.Auth
       ? children
-      : <Navigate to={AppRoute.Login} />
+      : <Navigate to={AppRoute.Intro} />
   );
 }
 
