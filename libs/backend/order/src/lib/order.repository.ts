@@ -38,7 +38,7 @@ export class OrderRepository extends BasePostgresRepository<OrderEntity, Order> 
 
   public async findByUserId(userId: string): Promise<OrderEntity[]> {
     const documents = await this.client.order.findMany({
-      where: { userId }
+      where: { id: userId }
     });
 
     return documents.map(document => this.createEntityFromDocument(document as Order));

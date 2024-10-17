@@ -1,9 +1,16 @@
 //import styles from './intro.module.css';
-import { Link } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 
-import { AppRoute } from '@fitfriends/utils';
+import { AppRoute, AuthorizationStatus } from '@fitfriends/utils';
+import { useAppSelector } from '@fitfriends/hooks';
+import { getAuthorizationStatus } from '@fitfriends/store';
 
 export function Intro() {
+  const authorized = useAppSelector(getAuthorizationStatus);
+  console.log(authorized)
+  if(authorized === AuthorizationStatus.Auth) {
+    return <Navigate to={AppRoute.Main} />;
+  }
   return (
     <div className="wrapper">
     <main>

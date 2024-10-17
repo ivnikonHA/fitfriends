@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
 
-import { AppDispatch } from '../types/state';
+import { AppDispatch } from '@fitfriends/store';
 
 export const useAppDispatch = useDispatch<AppDispatch>;

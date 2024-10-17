@@ -12,9 +12,18 @@ export const enum APIRoute {
   Refresh = 'user/refresh'
 }
 
+export const enum NameSpace {
+  Trainings = 'TRAININGS',
+  User = 'USER',
+  Order = 'ORDER',
+  Balance = 'BALANCE',
+  Review = 'REVIEW'
+}
+
 export const enum AuthorizationStatus {
   Auth = 'AUTH',
-  NoAuth = 'NOAUTH'
+  NoAuth = 'NOAUTH',
+  Unknown = 'UNKNOWN'
 }
 
 export const BACKEND_URL = "http://localhost:3001";
