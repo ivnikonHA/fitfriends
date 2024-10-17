@@ -14,6 +14,7 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
+    "isolatedModules": true,
     "paths": {
       "@fitfriends/backend-models": ["libs/backend/models/src/index.ts"],
       "@fitfriends/balance": ["libs/backend/balance/src/index.ts"],
