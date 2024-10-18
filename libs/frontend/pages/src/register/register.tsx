@@ -1,14 +1,19 @@
 //import styles from './register.module.css';
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
-import { Level , Location, Sex, Time } from '@fitfriends/core';
+import { Level , Location, Role, Sex, Time } from '@fitfriends/core';
 import { CreateUserDto } from '@fitfriends/user';
-import { ChangeHandler } from '@fitfriends/store';
+import { ChangeHandler, registerAction } from '@fitfriends/store';
+import { useAppDispatch } from '@fitfriends/hooks';
 
 export function Register() {
-  const selectRef = useRef<HTMLDivElement | null>(null);
+  const dispatch = useAppDispatch();
+  const selectRef = useRef<HTMLDivElement>(null);
+  const selectTextRef = useRef<HTMLSpanElement>(null);
+  const submitButtonRef = useRef<HTMLButtonElement>(null);
   const [isUserAgreementChecked, setIsUserAgreementChecked] = useState(false);
-  const [formData, setFormData] = useState<CreateUserDto>({
+  const [isSelectOpen, setIsSelectOpen] = useState(false);
+  const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
@@ -16,14 +21,14 @@ export function Register() {
     dateOfBirth: undefined,
     location: Location.PETROGRADSKAYA,
     sex: Sex.DONT_MATTER,
-    ready: false,
+    role: Role.COACH,
     picture: '',
     level: Level.AMATEUR,
     trainingTypes: [],
     trainingTime: Time.MEDIUM,
     caloriesAll: 5000,
     caloriesPerDay: 1000,
-    description: ''
+    description: 'qwertyuiop'
   });
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -40,12 +45,28 @@ export function Register() {
   };
 
   const handleSelectButtonClick = () => {
-    selectRef.current?.classList.add('is-open');
+    if(isSelectOpen) {
+      selectRef.current.classList.remove('is-open');
+      setIsSelectOpen(false);
+    } else {
+      selectRef.current?.classList.add('is-open');
+      setIsSelectOpen(true);
+    }
   }
   const handleSelectItemClick = (evt: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     selectRef.current?.classList.remove('is-open');
     setFormData({...formData, location: evt.currentTarget.dataset.value as Location});
-    selectRef.current?.classList.toggle('not-empty');
+    selectTextRef.current.textContent = evt.currentTarget.dataset.value;
+    selectRef.current?.classList.add('not-empty');
+  }
+
+  const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
+    evt.preventDefault();
+    const dto: CreateUserDto = {
+      ...formData
+    };
+    dispatch(registerAction(dto))
+    console.log(formData);
   }
 
   return (
@@ -66,7 +87,7 @@ export function Register() {
                 <h1 className="popup-form__title">Регистрация</h1>
               </div>
               <div className="popup-form__form">
-                <form method="post">
+                <form method="post" onSubmit={handleSubmitForm}>
                   <div className="sign-up">
                     <div className="sign-up__load-photo">
                       <div className="input-load-avatar">
@@ -91,6 +112,8 @@ export function Register() {
                               name="name"
                               onChange={handleFieldChange}
                               value={formData.name}
+                              required
+
                             />
                           </span>
                         </label>
@@ -104,6 +127,7 @@ export function Register() {
                               name="email"
                               onChange={handleFieldChange}
                               value={formData.email}
+                              required
                             />
                           </span>
                         </label>
@@ -133,16 +157,11 @@ export function Register() {
                           aria-label="Выберите одну из опций"
                           onClick={handleSelectButtonClick}
                         >
-                          <span className="custom-select__text" /><span className="custom-select__icon">
+                          <span className="custom-select__text" ref={selectTextRef} /><span className="custom-select__icon">
                             <svg width={15} height={6} aria-hidden="true">
                               <use xlinkHref="#arrow-down" />
                             </svg></span></button>
                         <ul className="custom-select__list" role="listbox">
-                          {/* <li>{Location.PETROGRADSKAYA}</li>
-                          <li>{Location.PIONERSKAYA}</li>
-                          <li>{Location.SPORTIVNAYA}</li>
-                          <li>{Location.UDELNAYA}</li>
-                          <li>{Location.ZVEZDNAYA}</li> */}
                           {Object.values(Location).map((item) =>
                             <li
                               className='custom-select__item'
@@ -162,6 +181,9 @@ export function Register() {
                               type="password"
                               name="password"
                               autoComplete="off"
+                              onChange={handleFieldChange}
+                              value={formData.password}
+                              required
                             />
                           </span>
                         </label>
@@ -173,6 +195,9 @@ export function Register() {
                               <input
                                 type="radio"
                                 name="sex"
+                                defaultChecked
+                                onChange={handleRadioChange}
+                                value={Sex.MALE}
                               />
                               <span className="custom-toggle-radio__icon" />
                               <span className="custom-toggle-radio__label">Мужской</span>
@@ -183,7 +208,8 @@ export function Register() {
                               <input
                                 type="radio"
                                 name="sex"
-                                defaultChecked
+                                onChange={handleRadioChange}
+                                value={Sex.FEMALE}
                               />
                               <span className="custom-toggle-radio__icon" />
                               <span className="custom-toggle-radio__label">Женский</span>
@@ -194,6 +220,8 @@ export function Register() {
                               <input
                                 type="radio"
                                 name="sex"
+                                onChange={handleRadioChange}
+                                value={Sex.DONT_MATTER}
                               />
                               <span className="custom-toggle-radio__icon" />
                               <span className="custom-toggle-radio__label">Неважно</span>
@@ -210,8 +238,9 @@ export function Register() {
                             <input
                               className="visually-hidden"
                               type="radio" name="role"
-                              defaultValue="coach"
+                              value={Role.COACH}
                               defaultChecked={true}
+                              onChange={handleRadioChange}
                             />
                             <span className="role-btn__icon">
                               <svg width={12} height={13} aria-hidden="true">
@@ -227,7 +256,8 @@ export function Register() {
                               className="visually-hidden"
                               type="radio"
                               name="role"
-                              defaultValue="sportsman"
+                              value={Role.SPORTSMAN}
+                              onChange={handleRadioChange}
                             />
                             <span className="role-btn__icon">
                               <svg width={12} height={13} aria-hidden="true">
@@ -245,7 +275,7 @@ export function Register() {
                           type="checkbox"
                           defaultValue="user-agreement"
                           name="user-agreement"
-                          defaultChecked
+                          onChange={() => setIsUserAgreementChecked((prevState) => !prevState)}
                         />
                         <span className="sign-up__checkbox-icon">
                           <svg width={9} height={6} aria-hidden="true">
@@ -255,7 +285,7 @@ export function Register() {
                         <span className="sign-up__checkbox-label">Я соглашаюсь с <span>политикой конфиденциальности</span> компании</span>
                       </label>
                     </div>
-                    <button className="btn sign-up__button" type="submit">Продолжить</button>
+                    <button className="btn sign-up__button" type="submit" ref={submitButtonRef} disabled={!isUserAgreementChecked}>Продолжить</button>
                   </div>
                 </form>
               </div>

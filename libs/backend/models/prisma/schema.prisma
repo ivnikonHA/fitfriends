@@ -31,7 +31,7 @@ model User {
   trainingTime   String
   caloriesAll    Int       @map("calories_all")
   caloriesPerDay Int       @map("calories_per_day")
-  ready          Boolean
+  role           String
 
   @@map("users")
 }

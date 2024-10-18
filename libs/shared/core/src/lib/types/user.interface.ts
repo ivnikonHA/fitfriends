@@ -1,5 +1,6 @@
 import { Level } from './level.interface';
 import { Location } from './location.interface';
+import { Role } from './role.interface';
 import { Sex } from './sex.interface';
 import { Time } from './time.interface';
 import { TrainingType } from './training-type.interface';
@@ -20,5 +21,5 @@ export interface User {
   trainingTime: Time;
   caloriesAll: number;
   caloriesPerDay: number;
-  ready: boolean;
+  role: Role;
 }

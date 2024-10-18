@@ -1,4 +1,4 @@
-import { Sex, Level, TrainingType, Time } from '@fitfriends/core';
+import { Sex, Level, TrainingType, Time, Role } from '@fitfriends/core';
 import { Expose } from 'class-transformer';
 
 export class UserRdo {
@@ -48,6 +48,6 @@ export class UserRdo {
   public caloriesPerDay: number;
 
   @Expose()
-  public ready: boolean;
+  public role: Role;
 
 }

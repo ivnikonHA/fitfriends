@@ -2,7 +2,7 @@ import { faker } from '@faker-js/faker';
 import { genSalt, hash } from 'bcrypt';
 import { PrismaClient } from '@prisma/client';
 
-import { Level, Location, Sex, Time, TrainingType } from '../../../shared/core/src/index';
+import { Level, Location, Role, Sex, Time, TrainingType } from '../../../shared/core/src/index';
 
 const DEFAULT_QUANTITY_OF_TRAININGS = 5;
 const DEFAULT_QUANTITY_OF_USERS = 5;
@@ -16,6 +16,7 @@ const location = enumKeys(Location);
 const trainingType = enumKeys(TrainingType);
 const trainingTime = enumKeys(Time);
 const sex = enumKeys(Sex);
+const roles = Object.values(Role);
 
 function getTraining() {
   return {
@@ -60,7 +61,7 @@ function getUser() {
     trainingTime: faker.helpers.arrayElement(trainingTime),
     caloriesAll: faker.number.int({max: 5000}),
     caloriesPerDay: faker.number.int({max: 1000}),
-    ready: faker.datatype.boolean()
+    role: faker.helpers.arrayElement(roles)
   }
 }
 

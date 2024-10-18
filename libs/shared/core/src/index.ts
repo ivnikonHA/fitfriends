@@ -9,6 +9,7 @@ export type { PaginationResult } from './lib/types/pagination.interface';
 export { Payment } from './lib/types/payment.interface';
 export type { RefreshTokenPayload } from './lib/types/refresh-token-payload.interface';
 export type { Review } from './lib/types/review.interface';
+export { Role } from './lib/types/role.interface';
 export { Sex } from './lib/types/sex.interface';
 export { SortDirection } from './lib/types/sort-direction.interface';
 export type { StoredFile } from './lib/types/stored-file.interface';

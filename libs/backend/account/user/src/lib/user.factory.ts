@@ -32,6 +32,6 @@ export class UserFactory implements EntityFactory<UserEntity> {
     entity.trainingTime = user.trainingTime;
     entity.caloriesAll = user.caloriesAll;
     entity.caloriesPerDay = user.caloriesPerDay;
-    entity.ready = user.ready;
+    entity.role = user.role;
   }
 }

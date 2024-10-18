@@ -5,6 +5,7 @@ import {
   Entity,
   Level,
   Location,
+  Role,
   Sex,
   StorableEntity,
   Time,
@@ -27,7 +28,7 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
   public trainingTime: Time;
   public caloriesAll: number;
   public caloriesPerDay: number;
-  public ready: boolean;
+  public role: Role;
 
   constructor(user?: AuthUser) {
     super();
@@ -42,9 +43,10 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
     if(user.createdAt) {
       this.createdAt = user.createdAt;
     }
-    if(user.id) {
-      this.id = user.id;
-    }
+    // if(user.id) {
+    //   this.id = user.id;
+    // }
+    this.id = user.id ?? undefined;
     this.name = user.name;
     this.passwordHash = user.passwordHash;
     this.email = user.email;
@@ -59,7 +61,7 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
     this.trainingTime = user.trainingTime;
     this.caloriesAll = user.caloriesAll;
     this.caloriesPerDay = user.caloriesPerDay;
-    this.ready = user.ready;
+    this.role = user.role;
   }
 
   public toPOJO(): AuthUser {
@@ -80,7 +82,7 @@ export class UserEntity extends Entity implements StorableEntity<AuthUser> {
       trainingTime: this.trainingTime,
       caloriesAll: this.caloriesAll,
       caloriesPerDay: this.caloriesPerDay,
-      ready: this.ready,
+      role: this.role,
     }
   }
 

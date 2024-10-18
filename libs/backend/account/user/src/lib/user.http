@@ -16,7 +16,7 @@ Content-Type: application/json
   "trainingTime": "50-80",
   "caloriesAll": 4000,
   "caloriesPerDay": 1500,
-  "ready": true
+  "role": "sportsman"
 }
 ###
 # Login user

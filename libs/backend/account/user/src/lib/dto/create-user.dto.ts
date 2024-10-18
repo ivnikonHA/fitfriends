@@ -1,6 +1,6 @@
-import { ArrayMaxSize, IsArray, IsBoolean, IsDate, IsEmail, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsDate, IsEmail, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
-import { Sex, Level, Location, TrainingType, Time } from '@fitfriends/core';
+import { Sex, Level, Location, TrainingType, Time, Role } from '@fitfriends/core';
 import { CaloriesNumber, DescriptionLength, NameLength, PasswordLength, TRAINING_TYPES_ARRAY_LENGTH, UserValidationMessage } from '../user.constant';
 
 export class CreateUserDto {
@@ -57,7 +57,6 @@ export class CreateUserDto {
   @Max(CaloriesNumber.Max, { message: UserValidationMessage.CaloriesNumber })
   public caloriesPerDay: number;
 
-  @IsBoolean({ message: UserValidationMessage.ReadyWrongType })
-  public ready: boolean;
-
+  @IsEnum(Role, { message: UserValidationMessage.ReadyWrongType })
+  public role: Role;
 }
