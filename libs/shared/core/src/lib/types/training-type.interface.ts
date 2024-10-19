@@ -1,9 +1,9 @@
 export enum TrainingType {
-  YOGA = 'yoga',
-  RUNNING = 'running',
-  BOX = 'box',
-  STRETCHING = 'stretching',
-  CROSSFIT = 'crossfit',
-  AEROBICS = 'aerobics',
-  PILATES = 'pilates'
+  YOGA = 'Йога',
+  RUNNING = 'Бег',
+  BOX = 'Бокс',
+  STRETCHING = 'Стрейчинг',
+  CROSSFIT = 'Кроссфит',
+  AEROBICS = 'Аэробика',
+  PILATES = 'Пилатес'
 }

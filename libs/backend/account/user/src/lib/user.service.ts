@@ -20,6 +20,7 @@ import { UserEntity } from './user.entity';
 import { AUTH_USER_EXISTS, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from './user.constant';
 import { LoginUserDto } from './dto/login-user.dto';
 import { RefreshTokenService } from './refresh-token-module/refresh-token.service';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Injectable()
 export class UserService {
@@ -42,6 +43,15 @@ export class UserService {
     const userEntity = await new UserEntity(user)
       .setPassword(await this.hasher.hash(dto.password));
     return this.userRepository.save(userEntity);
+  }
+
+  public async updateUser(id: string, dto: UpdateUserDto) {
+    const user = await this.getUserById(id);
+
+    for(const [key, value] of Object.entries(dto)) {
+       (user as unknown as Record<string, string>)[key] = value;
+    }
+    return this.userRepository.update(user);
   }
 
   public async verifyUser(dto: LoginUserDto) {

@@ -7,6 +7,5 @@ const getAuthorizationStatus = (state: State): AuthorizationStatus =>
 const getIsAuthorized = (state: State): boolean =>
   state[NameSpace.User].authorizationStatus === AuthorizationStatus.Auth;
 const getUserData = (state: State): LoggedUserRdo => state[NameSpace.User].userData;
-const getUserAvatar = (state: State): string => state[NameSpace.User].userAvatar;
 
-export { getAuthorizationStatus, getIsAuthorized, getUserData, getUserAvatar };
+export { getAuthorizationStatus, getIsAuthorized, getUserData };

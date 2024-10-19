@@ -7,7 +7,6 @@ import { LoggedUserRdo } from '@fitfriends/user';
 export type UserState = {
   authorizationStatus: AuthorizationStatus;
   userData: LoggedUserRdo;
-  userAvatar: string | undefined;
 }
 
 export type State = ReturnType<typeof store.getState>;

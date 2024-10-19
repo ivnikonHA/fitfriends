@@ -3,7 +3,7 @@ import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
 import { Location, NameLength, PasswordLength, Role, Sex } from '@fitfriends/core';
 import { CreateUserDto } from '@fitfriends/user';
-import { ChangeHandler, registerAction } from '@fitfriends/store';
+import { ChangeHandler, loginAction, registerAction } from '@fitfriends/store';
 import { useAppDispatch } from '@fitfriends/hooks';
 import { AppRoute, getDefaultInterviewResult } from '@fitfriends/utils';
 import { fileUploadService } from '../../../services/src/upload';
@@ -61,15 +61,18 @@ export function Register() {
 
   const handleSubmitForm = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    const responce = await fileUploadService(photo);
-    setFormData({...formData, avatar: `${responce.subDirectory}/${responce.hashName}`});
+    if(photo) {
+      const response = await fileUploadService(photo);
+      setFormData({...formData, avatar: `${response.subDirectory}/${response.hashName}`});
+    }
     const interviewData = getDefaultInterviewResult(formData.sex);
     const dto: CreateUserDto = {
       ...formData,
       ...interviewData
     };
     dispatch(registerAction(dto))
-    .then(() => navigate(AppRoute.Login));
+    .then(() => dispatch(loginAction({email: formData.email, password: formData.password})))
+    .then(() => navigate(AppRoute.Interview));
   }
 
   const handlePhotoUpload = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -82,7 +85,7 @@ export function Register() {
   return (
     <div className="wrapper">
       <Helmet>
-        <title>FitFriends - Регистрация</title>
+        <title>Регистрация — FitFriends</title>
       </Helmet>
       <main>
         <div className="background-logo">

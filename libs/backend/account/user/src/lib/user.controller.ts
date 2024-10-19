@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Patch, Post, Req, UnauthorizedException, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 
 import { fillDto } from '@fitfriends/helpers';
@@ -12,6 +12,7 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { AuthenticationResponseMessage } from './user.constant';
 import { RequestWithPayload } from './request-with-payload.interface';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @ApiTags('Пользователи')
 @Controller('user')
@@ -35,6 +36,27 @@ export class UserController {
 
     return fillDto(UserRdo, newUser.toPOJO());
   }
+
+  @ApiOperation({
+    summary: 'Обновить данные пользователя'
+  })
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: AuthenticationResponseMessage.UserUpdated,
+  })
+  @ApiResponse({
+    status: HttpStatus.NOT_FOUND,
+    description: AuthenticationResponseMessage.UserNotFound,
+  })
+  @Patch(':id')
+  public async update(@Param('id') id: string, @Body() dto: UpdateUserDto) {
+    await this.userService.getUserById(id);
+    const updatedUser = await this.userService.updateUser(id, dto);
+
+    return fillDto(UserRdo, updatedUser.toPOJO());
+  }
+
 
   @ApiOperation({
     summary: 'Залогинить пользователя'

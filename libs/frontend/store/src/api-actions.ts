@@ -4,8 +4,9 @@ import { AxiosInstance } from 'axios';
 import { Token, TokenPayload } from '@fitfriends/core';
 import { APIRoute } from '@fitfriends/utils';
 import { dropToken, saveToken } from '@fitfriends/services';
-import { CreateUserDto, LoggedUserRdo, LoginUserDto } from '@fitfriends/user';
-import { UploadedFileRdo } from '@fitfriends/file-uploader';
+import { CreateUserDto, LoggedUserRdo, LoginUserDto, UserRdo } from '@fitfriends/user';
+import { UpdateUserDto } from 'libs/backend/account/user/src/lib/dto/update-user.dto';
+import { generatePath } from 'react-router-dom';
 
 const checkAuthAction = createAsyncThunk<
   LoggedUserRdo,
@@ -44,18 +45,20 @@ const registerAction = createAsyncThunk<TokenPayload, CreateUserDto, {extra: Axi
   }
 );
 
-const uploadFileAction = createAsyncThunk<UploadedFileRdo, File, {extra: AxiosInstance}>(
-  'user/upload',
-  async (avatar, {extra: api}) => {
-    const { data } = await api.post<UploadedFileRdo>(APIRoute.Upload, avatar);
+const updateUserAction = createAsyncThunk<UserRdo, UpdateUserDto, {extra: AxiosInstance}>(
+  'user/update',
+  async (dto, {extra: api}) => {
+    console.log(dto.id)
+    const { data } = await api.patch<UserRdo>(`${APIRoute.Update}/${dto.id}`, dto);
     return data;
   }
 )
+
 
 export {
   checkAuthAction,
   loginAction,
   logoutAction,
   registerAction,
-  uploadFileAction
+  updateUserAction
 };
