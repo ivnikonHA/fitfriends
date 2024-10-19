@@ -1,6 +1,7 @@
 import { IsEmail, IsString, Length } from 'class-validator';
 
-import { PasswordLength, UserValidationMessage } from '../user.constant';
+import { UserValidationMessage } from '../user.constant';
+import { PasswordLength } from '@fitfriends/core';
 
 export class LoginUserDto {
   @IsEmail({}, { message: UserValidationMessage.EmailWrongType})

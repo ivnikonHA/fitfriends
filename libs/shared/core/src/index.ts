@@ -23,3 +23,5 @@ export type { User } from './lib/types/user.interface';
 export { Entity } from './lib/base/entity';
 export type { EntityFactory } from './lib/base/entity-factory.interface';
 export type { StorableEntity } from './lib/base/storable-entity.interface';
+
+export * from './lib/consts/user.const';

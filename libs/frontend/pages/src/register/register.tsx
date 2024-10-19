@@ -1,10 +1,11 @@
 //import styles from './register.module.css';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 
-import { Level , Location, Role, Sex, Time } from '@fitfriends/core';
+import { Location, NameLength, PasswordLength, Role, Sex } from '@fitfriends/core';
 import { CreateUserDto } from '@fitfriends/user';
 import { ChangeHandler, registerAction } from '@fitfriends/store';
 import { useAppDispatch } from '@fitfriends/hooks';
+import { getDefaultInterviewResult } from '@fitfriends/utils';
 
 export function Register() {
   const dispatch = useAppDispatch();
@@ -23,12 +24,6 @@ export function Register() {
     sex: Sex.DONT_MATTER,
     role: Role.COACH,
     picture: '',
-    level: Level.AMATEUR,
-    trainingTypes: [],
-    trainingTime: Time.MEDIUM,
-    caloriesAll: 5000,
-    caloriesPerDay: 1000,
-    description: 'qwertyuiop'
   });
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -56,17 +51,19 @@ export function Register() {
   const handleSelectItemClick = (evt: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     selectRef.current?.classList.remove('is-open');
     setFormData({...formData, location: evt.currentTarget.dataset.value as Location});
-    selectTextRef.current.textContent = evt.currentTarget.dataset.value;
-    selectRef.current?.classList.add('not-empty');
+    //selectTextRef.current.textContent = evt.currentTarget.dataset.value;
+    //selectRef.current?.classList.add('not-empty');
   }
 
   const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+
+    const interviewData = getDefaultInterviewResult(formData.sex);
     const dto: CreateUserDto = {
-      ...formData
+      ...formData,
+      ...interviewData
     };
-    dispatch(registerAction(dto))
-    console.log(formData);
+    dispatch(registerAction(dto));
   }
 
   return (
@@ -113,7 +110,8 @@ export function Register() {
                               onChange={handleFieldChange}
                               value={formData.name}
                               required
-
+                              minLength={NameLength.Min}
+                              maxLength={NameLength.Max}
                             />
                           </span>
                         </label>
@@ -147,7 +145,7 @@ export function Register() {
                         </label>
                       </div>
                       <div
-                        className="custom-select custom-select--not-selected"
+                        className="custom-select custom-select--not-selected not-empty"
                         ref={selectRef}
                       >
                         <span className="custom-select__label">Ваша локация</span>
@@ -157,7 +155,10 @@ export function Register() {
                           aria-label="Выберите одну из опций"
                           onClick={handleSelectButtonClick}
                         >
-                          <span className="custom-select__text" ref={selectTextRef} /><span className="custom-select__icon">
+                          <span className="custom-select__text" ref={selectTextRef}>
+                            {formData.location}
+                          </span>
+                          <span className="custom-select__icon">
                             <svg width={15} height={6} aria-hidden="true">
                               <use xlinkHref="#arrow-down" />
                             </svg></span></button>
@@ -184,6 +185,8 @@ export function Register() {
                               onChange={handleFieldChange}
                               value={formData.password}
                               required
+                              minLength={PasswordLength.Min}
+                              maxLength={PasswordLength.Max}
                             />
                           </span>
                         </label>

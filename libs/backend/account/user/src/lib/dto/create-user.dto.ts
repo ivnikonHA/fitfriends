@@ -1,7 +1,19 @@
 import { ArrayMaxSize, IsArray, IsDate, IsEmail, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
-import { Sex, Level, Location, TrainingType, Time, Role } from '@fitfriends/core';
-import { CaloriesNumber, DescriptionLength, NameLength, PasswordLength, TRAINING_TYPES_ARRAY_LENGTH, UserValidationMessage } from '../user.constant';
+import {
+  Sex,
+  Level,
+  Location,
+  TrainingType,
+  Time,
+  Role,
+  CaloriesNumber,
+  DescriptionLength,
+  NameLength,
+  PasswordLength,
+  TRAINING_TYPES_ARRAY_LENGTH
+} from '@fitfriends/core';
+import { UserValidationMessage } from '../user.constant';
 
 export class CreateUserDto {
   @IsString({ message: UserValidationMessage.NameWrongType})
