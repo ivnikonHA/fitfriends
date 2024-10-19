@@ -3,7 +3,8 @@ export const enum AppRoute {
   Main = '/main',
   Login = '/login',
   Register = '/register',
-  Interview = '/interview'
+  Interview = '/interview',
+  Account = '/account'
 }
 
 export const enum APIRoute {
@@ -11,7 +12,7 @@ export const enum APIRoute {
   Logout = '/user/logout',
   Register = 'user/register',
   Refresh = 'user/refresh',
-  Update = '/user',
+  User = '/user',
   Upload = 'files/upload'
 }
 

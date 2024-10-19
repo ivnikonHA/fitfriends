@@ -6,7 +6,6 @@ import { APIRoute } from '@fitfriends/utils';
 import { dropToken, saveToken } from '@fitfriends/services';
 import { CreateUserDto, LoggedUserRdo, LoginUserDto, UserRdo } from '@fitfriends/user';
 import { UpdateUserDto } from 'libs/backend/account/user/src/lib/dto/update-user.dto';
-import { generatePath } from 'react-router-dom';
 
 const checkAuthAction = createAsyncThunk<
   LoggedUserRdo,
@@ -48,8 +47,16 @@ const registerAction = createAsyncThunk<TokenPayload, CreateUserDto, {extra: Axi
 const updateUserAction = createAsyncThunk<UserRdo, UpdateUserDto, {extra: AxiosInstance}>(
   'user/update',
   async (dto, {extra: api}) => {
-    console.log(dto.id)
-    const { data } = await api.patch<UserRdo>(`${APIRoute.Update}/${dto.id}`, dto);
+    const { data } = await api.patch<UserRdo>(`${APIRoute.User}/${dto.id}`, dto);
+    return data;
+  }
+)
+
+const fetchUserAction = createAsyncThunk<UserRdo, string, {extra: AxiosInstance}>(
+  'user/fetch',
+  async (userId, {extra: api}) => {
+    console.log('fetchUser', userId)
+    const { data } = await api.get<UserRdo>(`${APIRoute.User}/${userId}`);
     return data;
   }
 )
@@ -60,5 +67,6 @@ export {
   loginAction,
   logoutAction,
   registerAction,
-  updateUserAction
+  updateUserAction,
+  fetchUserAction
 };
