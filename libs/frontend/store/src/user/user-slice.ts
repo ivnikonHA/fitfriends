@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { AuthorizationStatus, NameSpace } from '@fitfriends/utils';
 import { UserState } from '../state';
-import { checkAuthAction, loginAction, logoutAction } from '../api-actions';
+import { checkAuthAction, loginAction, logoutAction, uploadFileAction } from '../api-actions';
 import { dropToken } from '@fitfriends/services';
 
 const initialState: UserState = {
@@ -13,6 +13,7 @@ const initialState: UserState = {
     accessToken: '',
     refreshToken: ''
   },
+  userAvatar: undefined
 };
 
 export const userSlice = createSlice({
@@ -38,7 +39,10 @@ export const userSlice = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-      });
+      })
+      .addCase(uploadFileAction.fulfilled, (state, action) => {
+        state.userAvatar = action.payload.id;
+      })
   },
 });
 

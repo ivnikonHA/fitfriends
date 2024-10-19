@@ -9,7 +9,8 @@ export const enum APIRoute {
   Login = '/user/login',
   Logout = '/user/logout',
   Register = 'user/register',
-  Refresh = 'user/refresh'
+  Refresh = 'user/refresh',
+  Upload = 'files/upload'
 }
 
 export const enum NameSpace {

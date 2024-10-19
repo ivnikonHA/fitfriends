@@ -5,10 +5,14 @@ import { Location, NameLength, PasswordLength, Role, Sex } from '@fitfriends/cor
 import { CreateUserDto } from '@fitfriends/user';
 import { ChangeHandler, registerAction } from '@fitfriends/store';
 import { useAppDispatch } from '@fitfriends/hooks';
-import { getDefaultInterviewResult } from '@fitfriends/utils';
+import { AppRoute, getDefaultInterviewResult } from '@fitfriends/utils';
+import { fileUploadService } from '../../../services/src/upload';
+import { useNavigate } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 export function Register() {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const selectRef = useRef<HTMLDivElement>(null);
   const selectTextRef = useRef<HTMLSpanElement>(null);
   const submitButtonRef = useRef<HTMLButtonElement>(null);
@@ -25,6 +29,8 @@ export function Register() {
     role: Role.COACH,
     picture: '',
   });
+
+  const [photo, setPhoto] = useState<File | undefined>();
 
   const handleRadioChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -51,23 +57,33 @@ export function Register() {
   const handleSelectItemClick = (evt: React.MouseEvent<HTMLLIElement, MouseEvent>) => {
     selectRef.current?.classList.remove('is-open');
     setFormData({...formData, location: evt.currentTarget.dataset.value as Location});
-    //selectTextRef.current.textContent = evt.currentTarget.dataset.value;
-    //selectRef.current?.classList.add('not-empty');
   }
 
-  const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
+  const handleSubmitForm = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-
+    const responce = await fileUploadService(photo);
+    setFormData({...formData, avatar: `${responce.subDirectory}/${responce.hashName}`});
     const interviewData = getDefaultInterviewResult(formData.sex);
     const dto: CreateUserDto = {
       ...formData,
       ...interviewData
     };
-    dispatch(registerAction(dto));
+    dispatch(registerAction(dto))
+    .then(() => navigate(AppRoute.Login));
   }
+
+  const handlePhotoUpload = (evt: React.ChangeEvent<HTMLInputElement>) => {
+    if (!evt.target.files) {
+      return;
+    }
+    setPhoto(evt.target.files[0]);
+  };
 
   return (
     <div className="wrapper">
+      <Helmet>
+        <title>FitFriends - Регистрация</title>
+      </Helmet>
       <main>
         <div className="background-logo">
           <svg className="background-logo__logo" width={750} height={284} aria-hidden="true">
@@ -89,10 +105,18 @@ export function Register() {
                     <div className="sign-up__load-photo">
                       <div className="input-load-avatar">
                         <label>
-                          <input className="visually-hidden" type="file" accept="image/png, image/jpeg" /><span className="input-load-avatar__btn">
-                            <svg width={20} height={20} aria-hidden="true">
-                              <use xlinkHref="#icon-import" />
-                            </svg></span>
+                          <input
+                            className="visually-hidden"
+                            type="file"
+                            accept="image/png, image/jpeg"
+                            onChange={handlePhotoUpload}
+                          />
+                          <span className="input-load-avatar__btn input-load-avatar__avatar">
+                            {
+                              photo ? <img src={URL.createObjectURL(photo)} width="98" height="98" alt="user" />
+                              : <svg width={20} height={20} aria-hidden="true"><use xlinkHref="#icon-import" /></svg>
+                            }
+                          </span>
                         </label>
                       </div>
                       <div className="sign-up__description">

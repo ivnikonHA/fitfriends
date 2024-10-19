@@ -5,6 +5,7 @@ import { Token, TokenPayload } from '@fitfriends/core';
 import { APIRoute } from '@fitfriends/utils';
 import { dropToken, saveToken } from '@fitfriends/services';
 import { CreateUserDto, LoggedUserRdo, LoginUserDto } from '@fitfriends/user';
+import { UploadedFileRdo } from '@fitfriends/file-uploader';
 
 const checkAuthAction = createAsyncThunk<
   LoggedUserRdo,
@@ -43,9 +44,18 @@ const registerAction = createAsyncThunk<TokenPayload, CreateUserDto, {extra: Axi
   }
 );
 
+const uploadFileAction = createAsyncThunk<UploadedFileRdo, File, {extra: AxiosInstance}>(
+  'user/upload',
+  async (avatar, {extra: api}) => {
+    const { data } = await api.post<UploadedFileRdo>(APIRoute.Upload, avatar);
+    return data;
+  }
+)
+
 export {
   checkAuthAction,
   loginAction,
   logoutAction,
-  registerAction
+  registerAction,
+  uploadFileAction
 };
