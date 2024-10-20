@@ -2,7 +2,7 @@ import { createBrowserRouter, createRoutesFromElements, Route, RouterProvider } 
 import { HelmetProvider } from 'react-helmet-async';
 
 import { AppRoute } from '@fitfriends/utils';
-import { Intro, Login, Main, PersonalUser, QuestionnarieUser, Register } from '@fitfriends/pages';
+import { Intro, Login, Main, PersonalUser, QuestionnarieUser, Register, Trainings } from '@fitfriends/pages';
 import { PrivateRoute, PublicRoute } from '@fitfriends/components';
 
 function App(): JSX.Element {
@@ -31,8 +31,9 @@ function App(): JSX.Element {
         <Route path={AppRoute.Account} element={
           <PrivateRoute>
             <PersonalUser />
-          </PrivateRoute>
-        } />
+          </PrivateRoute> }
+        />
+        <Route path={AppRoute.Trainings} element={<Trainings />} />
       </Route>
     )
   )

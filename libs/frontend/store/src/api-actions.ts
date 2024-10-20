@@ -6,6 +6,7 @@ import { APIRoute } from '@fitfriends/utils';
 import { dropToken, saveToken } from '@fitfriends/services';
 import { CreateUserDto, LoggedUserRdo, LoginUserDto, UserRdo } from '@fitfriends/user';
 import { UpdateUserDto } from 'libs/backend/account/user/src/lib/dto/update-user.dto';
+import { TrainingWithPagination } from '@fitfriends/training';
 
 const checkAuthAction = createAsyncThunk<
   LoggedUserRdo,
@@ -60,6 +61,14 @@ const fetchUserAction = createAsyncThunk<UserRdo, string, {extra: AxiosInstance}
   }
 )
 
+const fetchTrainingsAction = createAsyncThunk<TrainingWithPagination, string, {extra: AxiosInstance}>(
+  'trainings/fetch',
+  async (params, {extra: api}) => {
+    const { data } = await api.get<TrainingWithPagination>(`${APIRoute.Training}${params}`);
+    return data;
+  }
+)
+
 
 export {
   checkAuthAction,
@@ -67,5 +76,6 @@ export {
   logoutAction,
   registerAction,
   updateUserAction,
-  fetchUserAction
+  fetchUserAction,
+  fetchTrainingsAction
 };

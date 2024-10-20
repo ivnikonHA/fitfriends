@@ -2,6 +2,7 @@ export type { AuthUser } from './lib/types/auth-user.interface';
 export type { Balance } from './lib/types/balance.interface';
 export type { JwtToken } from './lib/types/jwt-token.interface';
 export type { File } from './lib/types/file.interface';
+export type { FilterType } from './lib/types/filter.interface';
 export { Level } from './lib/types/level.interface';
 export { Location } from './lib/types/location.interface';
 export type { Order } from './lib/types/order.interface';
@@ -18,6 +19,7 @@ export type { Token } from './lib/types/token.interface';
 export type { TokenPayload } from './lib/types/token-payload.interface';
 export { TrainingType } from './lib/types/training-type.interface';
 export type { Training } from './lib/types/training.interface';
+export { TrainingQuery } from './lib/types/training-query.interface';
 export type { User } from './lib/types/user.interface';
 
 export { Entity } from './lib/base/entity';
@@ -25,3 +27,4 @@ export type { EntityFactory } from './lib/base/entity-factory.interface';
 export type { StorableEntity } from './lib/base/storable-entity.interface';
 
 export * from './lib/consts/user.const';
+export * from './lib/consts/trainings.const';

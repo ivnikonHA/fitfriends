@@ -4,7 +4,8 @@ export const enum AppRoute {
   Login = '/login',
   Register = '/register',
   Interview = '/interview',
-  Account = '/account'
+  Account = '/account',
+  Trainings = '/trainings'
 }
 
 export const enum APIRoute {
@@ -13,7 +14,8 @@ export const enum APIRoute {
   Register = 'user/register',
   Refresh = 'user/refresh',
   User = '/user',
-  Upload = 'files/upload'
+  Upload = 'files/upload',
+  Training = '/training'
 }
 
 export const enum NameSpace {
@@ -28,6 +30,13 @@ export const enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NOAUTH',
   Unknown = 'UNKNOWN'
+}
+
+export const enum RequestStatus {
+  Idle = 'idle',
+  Loading = 'loading',
+  Success = 'success',
+  Failed = 'failed'
 }
 
 export const BACKEND_URL = "http://localhost:3001/api";

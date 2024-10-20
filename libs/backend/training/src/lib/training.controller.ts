@@ -1,4 +1,5 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from '@nestjs/common';
+import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 import { TrainingService } from './training.service';
 import { fillDto } from '@fitfriends/helpers';
@@ -7,7 +8,6 @@ import { TrainingQuery } from './training.query';
 import { TrainingWithPagination } from './rdo/training-with-pagination.rdo';
 import { CreateTrainingDto } from './dto/create-training.dto';
 import { UpdateTrainingDto } from './dto/update-training.dto';
-import { ApiOperation, ApiParam, ApiTags } from '@nestjs/swagger';
 
 @ApiTags('Тренировки')
 @Controller('training')

@@ -1,4 +1,4 @@
-import { Level, Sex, Time } from '@fitfriends/core';
+import { DEFAULT_TRAINING_COUNT_LIMIT, FilterType, Level, Sex, Time } from '@fitfriends/core';
 
 export function getDefaultInterviewResult(sex: Sex) {
   return {
@@ -9,4 +9,8 @@ export function getDefaultInterviewResult(sex: Sex) {
     caloriesPerDay: sex === Sex.MALE ? 3300: 2300,
     description: 'qwertyuiop'
   }
+}
+
+export function getParamsString(filter: FilterType): string {
+  return `/?limit=${DEFAULT_TRAINING_COUNT_LIMIT}&sortDirection=${filter.sorting}&`
 }
