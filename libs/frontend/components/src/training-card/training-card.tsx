@@ -1,4 +1,8 @@
+import { Link } from 'react-router-dom';
+
 import { Training } from '@fitfriends/core';
+import { TrainingPage } from '@fitfriends/pages';
+import { AppRoute } from '@fitfriends/utils';
 
 interface TrainingCardProps {
   training: Training;
@@ -39,7 +43,7 @@ export function TrainingCard({training}: TrainingCardProps) {
           <p className="thumbnail-training__text">{training.description}</p>
         </div>
         <div className="thumbnail-training__button-wrapper">
-          <a className="btn btn--small thumbnail-training__button-catalog" href="#">Подробнее</a>
+          <Link className="btn btn--small thumbnail-training__button-catalog" to={AppRoute.Training} state={{training}}>Подробнее</Link>
           <a className="btn btn--small btn--outlined thumbnail-training__button-catalog" href="#">Отзывы</a>
         </div>
       </div>

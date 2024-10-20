@@ -5,7 +5,8 @@ export const enum AppRoute {
   Register = '/register',
   Interview = '/interview',
   Account = '/account',
-  Trainings = '/trainings'
+  Trainings = '/trainings',
+  Training = '/training'
 }
 
 export const enum APIRoute {

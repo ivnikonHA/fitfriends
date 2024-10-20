@@ -1,4 +1,4 @@
-import { DEFAULT_TRAINING_COUNT_LIMIT, FilterType, Level, Sex, Time } from '@fitfriends/core';
+import { FilterType, Level, Sex, Time } from '@fitfriends/core';
 
 export function getDefaultInterviewResult(sex: Sex) {
   return {
@@ -11,6 +11,6 @@ export function getDefaultInterviewResult(sex: Sex) {
   }
 }
 
-export function getParamsString(filter: FilterType): string {
-  return `/?limit=${DEFAULT_TRAINING_COUNT_LIMIT}&sortDirection=${filter.sorting}&`
+export function getParamsString(filter: FilterType, visibleItems: number): string {
+  return `/?limit=${visibleItems}&sortDirection=${filter.sorting}&`
 }

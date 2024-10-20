@@ -1,3 +1,4 @@
+export * from './training/training';
 export * from './trainings/trainings';
 export * from './personal-user/personal-user';
 export * from './questionnarie-user/questionnarie-user';
