@@ -8,7 +8,9 @@
     "postgres:seed": "npx nx run backend:db:seed",
     "postgres:reset": "npx nx run backend:db:reset",
     "postgres:generate": "npx nx run backend:db:generate",
-    "postgres:lint": "npx nx run backend:db:lint"
+    "postgres:lint": "npx nx run backend:db:lint",
+    "frontend:start": "npx nx run frontend:serve",
+    "backend:start": "npx nx run backend:serve"
   },
   "private": true,
   "dependencies": {

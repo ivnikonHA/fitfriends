@@ -5,7 +5,7 @@ import applicationConfig from './configurations/app.config';
 import jwtConfig from './configurations/jwt/jwt.config';
 import fileVaultConfig from './configurations/file-vault.config';
 
-const ENV_FILE = '.env';
+const ENV_FILE = '../../.env';
 
 @Module({
   imports: [
