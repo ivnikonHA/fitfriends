@@ -1,8 +1,10 @@
+import { useEffect, useState } from 'react';
+import { Helmet } from 'react-helmet-async';
+
 import { Header } from '@fitfriends/components';
 import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
 import { fetchUserAction, getUserData, getUserInfo } from '@fitfriends/store';
-import { useEffect } from 'react';
-import { Helmet } from 'react-helmet-async';
+import LoadingPage from '../loading-page/loading-page';
 
 
 export function PersonalUser() {
@@ -10,11 +12,13 @@ export function PersonalUser() {
   const userId = useAppSelector(getUserData);
   const userInfo = useAppSelector(getUserInfo);
 
-  console.log('userId', userId.id);
-  dispatch(fetchUserAction(userId.id));
+  useEffect(() => {
+    dispatch(fetchUserAction(userId.id));
+  }, [userId, dispatch]);
 
-
-  console.log(userInfo)
+  if(!userInfo) {
+    return <LoadingPage />
+  }
 
   return (
     <div className="wrapper">
@@ -31,9 +35,14 @@ export function PersonalUser() {
                 <div className="user-info__header">
                   <div className="input-load-avatar">
                     <label>
-                      <input className="visually-hidden" type="file" name="user-photo-1" accept="image/png, image/jpeg" />
+                      <input
+                        className="visually-hidden"
+                        type="file"
+                        name="user-photo-1"
+                        accept="image/png, image/jpeg"
+                      />
                       <span className="input-load-avatar__avatar">
-                        <img src={`http://localhost:3001/static/${userInfo.avatar}`} width={98} height={98} alt="user" />
+                        <img src={userInfo.avatar ? `http://localhost:3001/static/${userInfo.avatar}`: 'img/content/avatars/users/photo-1.png'} width={98} height={98} alt="user" />
                       </span>
                     </label>
                   </div>

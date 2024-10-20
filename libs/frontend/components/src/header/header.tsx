@@ -1,25 +1,43 @@
-import styles from './header.module.css';
+import { Link, useLocation } from 'react-router-dom';
+
+import { AppRoute } from '@fitfriends/utils';
 
 export function Header() {
+  const location = useLocation();
   return (
     <header className="header">
-        <div className="container"><span className="header__logo">
-            <svg width="187" height="70" aria-hidden="true">
-              <use xlinkHref="#logo"></use>
-            </svg></span>
+        <div className="container">
+          <span className="header__logo">
+            <Link to={AppRoute.Intro}>
+              <svg width="187" height="70" aria-hidden="true">
+                <use xlinkHref="#logo"></use>
+              </svg>
+            </Link>
+          </span>
           <nav className="main-nav">
             <ul className="main-nav__list">
               <li className="main-nav__item">
-                <a className="main-nav__link is-active" href="#" aria-label="На главную">
+                <Link
+                  className={`main-nav__link ${location.pathname === AppRoute.Main? 'is-active': ''}`}
+                  to={AppRoute.Main}
+                  aria-label="На главную"
+                >
                   <svg width="18" height="18" aria-hidden="true">
                     <use xlinkHref="#icon-home"></use>
                   </svg>
-                </a>
+                </Link>
               </li>
-              <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Личный кабинет">
+              <li className="main-nav__item">
+                <Link
+                  className={`main-nav__link ${location.pathname === AppRoute.Account? 'is-active': ''}`}
+                  to={AppRoute.Account}
+                  aria-label="Личный кабинет"
+                >
                   <svg width="16" height="18" aria-hidden="true">
                     <use xlinkHref="#icon-user"></use>
-                  </svg></a></li>
+                  </svg>
+                </Link>
+              </li>
               <li className="main-nav__item"><a className="main-nav__link" href="#" aria-label="Друзья">
                   <svg width="22" height="16" aria-hidden="true">
                     <use xlinkHref="#icon-friends"></use>

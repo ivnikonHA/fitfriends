@@ -32,7 +32,6 @@ export const createAPI = (): AxiosInstance => {
           const token = response.data;
           saveToken(token);
           originalRequest.headers[TOKEN_HEADER] = `Bearer ${token.accessToken}`;
-          console.log(originalRequest)
           return api(originalRequest);
         } catch(error) {
           throw new Error(error.message);

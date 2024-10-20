@@ -55,7 +55,6 @@ const updateUserAction = createAsyncThunk<UserRdo, UpdateUserDto, {extra: AxiosI
 const fetchUserAction = createAsyncThunk<UserRdo, string, {extra: AxiosInstance}>(
   'user/fetch',
   async (userId, {extra: api}) => {
-    console.log('fetchUser', userId)
     const { data } = await api.get<UserRdo>(`${APIRoute.User}/${userId}`);
     return data;
   }

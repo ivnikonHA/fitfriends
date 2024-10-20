@@ -28,7 +28,11 @@ function App(): JSX.Element {
         />
         <Route path={AppRoute.Register} element={<Register />} />
         <Route path={AppRoute.Interview} element={<QuestionnarieUser />} />
-        <Route path={AppRoute.Account} element={<PersonalUser />} />
+        <Route path={AppRoute.Account} element={
+          <PrivateRoute>
+            <PersonalUser />
+          </PrivateRoute>
+        } />
       </Route>
     )
   )

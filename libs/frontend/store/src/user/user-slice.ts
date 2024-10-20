@@ -7,30 +7,8 @@ import { dropToken } from '@fitfriends/services';
 
 const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
-  userData: {
-    id: '',
-    email: '',
-    accessToken: '',
-    refreshToken: ''
-  },
-  userInfo: {
-    id: '',
-    avatar: '',
-    caloriesAll: 0,
-    dateOfBirth: undefined,
-    caloriesPerDay: 0,
-    description: '',
-    email: '',
-    level: undefined,
-    location: undefined,
-    name: undefined,
-    picture: '',
-    role: undefined,
-    sex: undefined,
-    trainingTime: undefined,
-    trainingTypes: [],
-    createdAt: undefined
-  }
+  userData: null,
+  userInfo: null
 };
 
 export const userSlice = createSlice({

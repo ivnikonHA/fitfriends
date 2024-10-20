@@ -61,7 +61,6 @@ export function QuestionnarieUser() {
     if(!formData.trainingTime) {
       return;
     }
-    console.log(formData)
     dispatch(updateUserAction({...formData, id: userId}));
   }
 
