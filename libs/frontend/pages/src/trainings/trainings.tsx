@@ -16,7 +16,7 @@ export function Trainings() {
   const filter = useAppSelector(getFilter);
 
   useEffect(() => {
-    const queryParam = getParamsString(filter);
+    const queryParam = getParamsString(filter, visibleItems);
     dispatch(fetchTrainingsAction(queryParam))
   }, [dispatch, visibleItems, filter]);
 
