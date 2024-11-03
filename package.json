@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "postgres:start": "docker compose --file ./apps/backend/docker-compose.dev.yml --env-file ./apps/backend/.env --project-name fitfriends up -d",
+    "postgres:start": "docker compose --file ./apps/backend/docker-compose.dev.yml --env-file ./.env --project-name fitfriends up -d",
     "postgres:migrate": "npx nx run backend:db:migrate",
     "postgres:seed": "npx nx run backend:db:seed",
     "postgres:reset": "npx nx run backend:db:reset",

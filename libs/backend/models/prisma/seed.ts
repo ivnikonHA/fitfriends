@@ -61,7 +61,8 @@ function getUser() {
     trainingTime: faker.helpers.arrayElement(trainingTime),
     caloriesAll: faker.number.int({max: 5000}),
     caloriesPerDay: faker.number.int({max: 1000}),
-    role: faker.helpers.arrayElement(roles)
+    role: faker.helpers.arrayElement(roles),
+    ready: faker.datatype.boolean()
   }
 }
 

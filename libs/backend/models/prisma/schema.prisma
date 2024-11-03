@@ -32,6 +32,7 @@ model User {
   caloriesAll    Int       @map("calories_all")
   caloriesPerDay Int       @map("calories_per_day")
   role           String
+  ready          Boolean
 
   @@map("users")
 }
