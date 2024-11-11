@@ -1,4 +1,4 @@
-import { Sex, Level, TrainingType, Time, Role } from '@fitfriends/core';
+import { Sex, Level, Location, TrainingType, Time, Role } from '@fitfriends/core';
 import { Expose } from 'class-transformer';
 
 export class UserRdo {
