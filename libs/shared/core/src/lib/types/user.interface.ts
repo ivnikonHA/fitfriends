@@ -22,4 +22,5 @@ export interface User {
   caloriesAll: number;
   caloriesPerDay: number;
   role: Role;
+  ready: boolean;
 }

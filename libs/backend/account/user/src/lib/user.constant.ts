@@ -20,7 +20,8 @@ export const UserValidationMessage = {
   CaloriesWrongType: 'Calories must be an integer number',
   CaloriesPerDay: 'Calories per day must be an integer number',
   CaloriesNumber: `Calories must be from ${CaloriesNumber.Min} to ${CaloriesNumber.Max}`,
-  ReadyWrongType: 'Ready must be coach or sportsman'
+  RoleWrongType: 'Role must be coach or sportsman',
+  ReadyWrongType: 'Ready must be boolean'
 }
 
 export const AUTH_USER_EXISTS = 'User with this email exists';

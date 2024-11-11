@@ -1,4 +1,4 @@
-import { ArrayMaxSize, IsArray, IsDate, IsEmail, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
+import { ArrayMaxSize, IsArray, IsBoolean, IsDate, IsEmail, IsEnum, IsInt, IsOptional, IsString, Length, Max, Min } from 'class-validator';
 
 import {
   Sex,
@@ -69,6 +69,10 @@ export class CreateUserDto {
   @Max(CaloriesNumber.Max, { message: UserValidationMessage.CaloriesNumber })
   public caloriesPerDay: number;
 
-  @IsEnum(Role, { message: UserValidationMessage.ReadyWrongType })
+  @IsEnum(Role, { message: UserValidationMessage.RoleWrongType })
   public role: Role;
+
+  @IsOptional()
+  @IsBoolean({message: UserValidationMessage.ReadyWrongType})
+  public ready: boolean;
 }
