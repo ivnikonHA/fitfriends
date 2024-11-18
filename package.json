@@ -11,7 +11,7 @@
     "postgres:lint": "npx nx run backend:db:lint",
     "frontend:start": "npx nx run frontend:serve",
     "backend:start": "npx nx run backend:serve",
-    "test": "vitest --passWithNoTests common"
+    "test": "vitest --passWithNoTests"
   },
   "private": true,
   "dependencies": {
