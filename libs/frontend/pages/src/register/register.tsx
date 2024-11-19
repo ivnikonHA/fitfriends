@@ -6,7 +6,7 @@ import { CreateUserDto } from '@fitfriends/user';
 import { ChangeHandler, loginAction, registerAction } from '@fitfriends/store';
 import { useAppDispatch } from '@fitfriends/hooks';
 import { AppRoute, getDefaultInterviewResult } from '@fitfriends/utils';
-import { fileUploadService } from '../../../services/src/upload';
+import { fileUploadService } from '@fitfriends/services';
 import { useNavigate } from 'react-router-dom';
 import { Helmet } from 'react-helmet-async';
 
@@ -25,9 +25,10 @@ export function Register() {
     avatar: "",
     dateOfBirth: undefined,
     location: Location.PETROGRADSKAYA,
-    sex: Sex.DONT_MATTER,
+    sex: Sex.MALE,
     role: Role.COACH,
     picture: '',
+    ready: false
   });
 
   const [photo, setPhoto] = useState<File | undefined>();
@@ -61,15 +62,19 @@ export function Register() {
 
   const handleSubmitForm = async (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    let avatar = '';
     if(photo) {
       const response = await fileUploadService(photo);
-      setFormData({...formData, avatar: `${response.subDirectory}/${response.hashName}`});
+      avatar = `${response.subDirectory}/${response.hashName}`;
+      setFormData({...formData, avatar});
     }
     const interviewData = getDefaultInterviewResult(formData.sex);
     const dto: CreateUserDto = {
       ...formData,
+      avatar,
       ...interviewData
     };
+    console.log(dto)
     dispatch(registerAction(dto))
     .then(() => dispatch(loginAction({email: formData.email, password: formData.password})))
     .then(() => navigate(AppRoute.Interview));
