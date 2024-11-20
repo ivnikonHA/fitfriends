@@ -1,10 +1,10 @@
 import { render } from '@testing-library/react';
 
-import QuestionnarieUser from './questionnarie-user';
+import Questionnarie from './questionnarie';
 
 describe('QuestionnarieUser', () => {
   it('should render successfully', () => {
-    const { baseElement } = render(<QuestionnarieUser />);
+    const { baseElement } = render(<Questionnarie />);
     expect(baseElement).toBeTruthy();
   });
 });
