@@ -16,14 +16,14 @@ export interface Interview {
   extraTraining: boolean;
 }
 
-function getUserRole() {
-  return Role.SPORTSMAN;
-}
+// function getUserRole() {
+//   return Role.SPORTSMAN;
+// }
 
 export function Questionnarie() {
-  // const dispatch = useAppDispatch();
-  // const userId = useAppSelector(getUserData).id;
-  const userRole = getUserRole();
+  const dispatch = useAppDispatch();
+  const userId = useAppSelector(getUserData).id;
+  const userRole = useAppSelector(getUserData).role;
   const questionnaireClass = userRole === Role.COACH ? 'coach' : 'user';
   const [formData, setFormData] = useState<Interview>({
     trainingType: [],
@@ -75,7 +75,7 @@ export function Questionnarie() {
     if(!formData.trainingTime) {
       return;
     }
-    //dispatch(updateUserAction({...formData, id: userId}));
+    dispatch(updateUserAction({...formData, id: userId}));
   }
 
   return (
