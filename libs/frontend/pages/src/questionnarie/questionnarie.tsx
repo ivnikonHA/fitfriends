@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
 import { getUserData, updateUserAction } from '@fitfriends/store';
 
 export interface Interview {
-  trainingType: TrainingType[];
+  trainingTypes: TrainingType[];
   trainingTime: Time;
   level: Level;
   caloriesAll: number;
@@ -22,11 +22,13 @@ export interface Interview {
 
 export function Questionnarie() {
   const dispatch = useAppDispatch();
-  const userId = useAppSelector(getUserData).id;
-  const userRole = useAppSelector(getUserData).role;
+  const userData = useAppSelector(getUserData);
+  console.log(userData);
+  const userId = userData.id;
+  const userRole = userData.role;
   const questionnaireClass = userRole === Role.COACH ? 'coach' : 'user';
   const [formData, setFormData] = useState<Interview>({
-    trainingType: [],
+    trainingTypes: [],
     trainingTime: undefined,
     level: undefined,
     caloriesAll: 0,
@@ -53,29 +55,47 @@ export function Questionnarie() {
   };
 
   const handleCheckboxChange = (evt: ChangeEvent<HTMLInputElement>) => {
-    let trainings = formData.trainingType;
+    let trainings = formData.trainingTypes;
     const currentTraining = evt.target.value as TrainingType;
     if (trainings.includes(evt.target.value as TrainingType)) {
       trainings = trainings.filter((item) => item !== currentTraining);
     } else {
       trainings.push(currentTraining);
     }
-    setFormData({...formData, trainingType: trainings})
+    setFormData({...formData, trainingTypes: trainings})
   }
 
   const handleSubmitForm = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    console.log(formData);
-    if(formData.trainingType.length === 0 || formData.trainingType.length > 3) {
+
+    if(formData.trainingTypes.length === 0 || formData.trainingTypes.length > 3) {
       return;
     }
     if(!formData.level) {
       return;
     }
-    if(!formData.trainingTime) {
-      return;
+    // if(!formData.trainingTime) {
+    //   return;
+    // }
+    let sendData = {};
+    if(userRole === Role.COACH) {
+      sendData = {
+        trainingTypes: formData.trainingTypes,
+        level: formData.level,
+        description: formData.description,
+        extraTraining: formData.extraTraining,
+        id: userId
+      }
+    } else {
+      sendData = {
+        trainingTypes: formData.trainingTypes,
+        level: formData.level,
+        trainingTime: formData.trainingTime,
+        caloriesAll: formData.caloriesAll,
+        caloriesPerDay: formData.caloriesPerDay
+      }
     }
-    dispatch(updateUserAction({...formData, id: userId}));
+    dispatch(updateUserAction(sendData));
   }
 
   return (

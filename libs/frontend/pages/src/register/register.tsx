@@ -72,6 +72,7 @@ export function Register() {
     const dto: CreateUserDto = {
       ...formData,
       avatar,
+      dateOfBirth: new Date(formData.dateOfBirth),
       ...interviewData
     };
     console.log(dto)
@@ -168,10 +169,10 @@ export function Register() {
                           <span className="custom-input__wrapper">
                             <input
                               type="date"
-                              name="birthday"
+                              name="dateOfBirth"
                               max="2099-12-31"
                               onChange={handleFieldChange}
-                              value={formData.dateOfBirth?.toISOString()}
+                              value={formData.dateOfBirth}
                             />
                           </span>
                         </label>

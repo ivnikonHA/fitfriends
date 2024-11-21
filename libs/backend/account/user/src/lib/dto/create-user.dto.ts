@@ -34,7 +34,7 @@ export class CreateUserDto {
   public sex: Sex;
 
   @IsOptional()
-  @IsDate({ message: UserValidationMessage.DateOfBirthWrongType })
+  //@IsDate({ message: UserValidationMessage.DateOfBirthWrongType })
   public dateOfBirth: Date;
 
   @IsString({ message: UserValidationMessage.DescriptionWrongType })

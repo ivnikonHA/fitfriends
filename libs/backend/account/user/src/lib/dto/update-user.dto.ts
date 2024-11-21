@@ -31,12 +31,12 @@ export class UpdateUserDto {
   public sex?: Sex;
 
   @IsOptional()
-  @IsDate({ message: UserValidationMessage.DateOfBirthWrongType })
+  //@IsDate({ message: UserValidationMessage.DateOfBirthWrongType })
   public dateOfBirth?: Date;
 
   @IsOptional()
   @IsString({ message: UserValidationMessage.DescriptionWrongType })
-  @Length(DescriptionLength.Min, DescriptionLength.Max, { message: UserValidationMessage.DescriptionWrongLength })
+  //@Length(DescriptionLength.Min, DescriptionLength.Max, { message: UserValidationMessage.DescriptionWrongLength })
   public description?: string;
 
   @IsOptional()

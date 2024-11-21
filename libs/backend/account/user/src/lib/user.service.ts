@@ -47,10 +47,11 @@ export class UserService {
 
   public async updateUser(id: string, dto: UpdateUserDto) {
     const user = await this.getUserById(id);
-
+console.log('User before: ', user);
     for(const [key, value] of Object.entries(dto)) {
        (user as unknown as Record<string, string>)[key] = value;
     }
+    console.log('User after: ', user);
     return this.userRepository.update(user);
   }
 
