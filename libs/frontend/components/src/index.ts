@@ -1,3 +1,4 @@
+export * from './user-info/user-info';
 export * from './reviews-aside/reviews-aside';
 export * from './training-card/training-card';
 export * from './trainings/trainings';
