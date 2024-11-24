@@ -1,6 +1,6 @@
 export * from './training/training';
 export * from './trainings/trainings';
-export * from './personal-user/personal-user';
+export * from './personal/personal';
 export * from './questionnarie/questionnarie';
 export * from './login/login';
 export * from './register/register';

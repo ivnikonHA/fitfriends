@@ -1,3 +1,4 @@
+export * from './personal-user/personal-user';
 export * from './user-info/user-info';
 export * from './reviews-aside/reviews-aside';
 export * from './training-card/training-card';
@@ -6,3 +7,4 @@ export * from './private-route/private-route';
 export * from './main/main';
 export * from './header/header';
 export * from './public-route/public-route';
+export * from './personal-coach/personal-coach';
