@@ -4,6 +4,8 @@ import { Helmet } from 'react-helmet-async';
 import { Level, Role, Time, TrainingType } from '@fitfriends/core';
 import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
 import { getUserData, updateUserAction } from '@fitfriends/store';
+import { useNavigate } from 'react-router-dom';
+import { AppRoute } from '@fitfriends/utils';
 
 export interface Interview {
   trainingTypes: TrainingType[];
@@ -16,14 +18,11 @@ export interface Interview {
   extraTraining: boolean;
 }
 
-// function getUserRole() {
-//   return Role.SPORTSMAN;
-// }
-
 export function Questionnarie() {
   const dispatch = useAppDispatch();
   const userData = useAppSelector(getUserData);
-  console.log(userData);
+  const navigate = useNavigate();
+
   const userId = userData.id;
   const userRole = userData.role;
   const questionnaireClass = userRole === Role.COACH ? 'coach' : 'user';
@@ -74,9 +73,7 @@ export function Questionnarie() {
     if(!formData.level) {
       return;
     }
-    // if(!formData.trainingTime) {
-    //   return;
-    // }
+
     let sendData = {};
     if(userRole === Role.COACH) {
       sendData = {
@@ -95,7 +92,7 @@ export function Questionnarie() {
         caloriesPerDay: formData.caloriesPerDay
       }
     }
-    dispatch(updateUserAction(sendData));
+    dispatch(updateUserAction(sendData)).then(() => navigate(AppRoute.Main));
   }
 
   return (
