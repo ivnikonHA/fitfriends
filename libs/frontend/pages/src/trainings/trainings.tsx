@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
 import { fetchTrainingsAction, getFilter, getTrainings, getTrainingsLoadingStatus } from '@fitfriends/store';
 import { DEFAULT_TRAINING_COUNT_LIMIT } from '@fitfriends/core';
 import { getParamsString, RequestStatus } from '@fitfriends/utils';
-import { LoadingPage } from '@fitfriends/pages';
+import { LoadingPage } from '../loading-page/loading-page';
 
 
 export function Trainings() {

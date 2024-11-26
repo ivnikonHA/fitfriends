@@ -1,4 +1,4 @@
-import { FilterType, Level, Sex, Time } from '@fitfriends/core';
+import { FilterType, Level, OrderBy, Sex, Time } from '@fitfriends/core';
 
 export function getDefaultInterviewResult(sex: Sex) {
   return {
@@ -12,5 +12,5 @@ export function getDefaultInterviewResult(sex: Sex) {
 }
 
 export function getParamsString(filter: FilterType, visibleItems: number): string {
-  return `/?limit=${visibleItems}&sortDirection=${filter.sorting}&`
+  return `/?limit=${visibleItems}&sortDirection=${filter.sorting}&orderBy=${OrderBy.PRICE}`
 }

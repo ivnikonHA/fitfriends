@@ -6,6 +6,7 @@ export type { FilterType } from './lib/types/filter.interface';
 export { Level } from './lib/types/level.interface';
 export { Location } from './lib/types/location.interface';
 export type { Order } from './lib/types/order.interface';
+export { OrderBy } from './lib/types/order-by.interface'
 export type { PaginationResult } from './lib/types/pagination.interface';
 export { Payment } from './lib/types/payment.interface';
 export type { RefreshTokenPayload } from './lib/types/refresh-token-payload.interface';

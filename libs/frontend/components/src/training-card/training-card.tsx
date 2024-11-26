@@ -1,7 +1,6 @@
 import { Link } from 'react-router-dom';
 
 import { Training } from '@fitfriends/core';
-import { TrainingPage } from '@fitfriends/pages';
 import { AppRoute } from '@fitfriends/utils';
 
 interface TrainingCardProps {
