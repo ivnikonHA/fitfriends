@@ -2,6 +2,7 @@ import { Transform } from 'class-transformer';
 import { DEFAULT_PAGE_COUNT, DEFAULT_SORT_DIRECTION, DEFAULT_TRAINING_COUNT_LIMIT } from './training.const';
 import { IsIn, IsNumber, IsOptional } from 'class-validator';
 import { OrderBy, SortDirection } from '@fitfriends/core';
+import { Prisma } from '@prisma/client';
 
 export class TrainingQuery {
   @Transform(({value}) => +value || DEFAULT_TRAINING_COUNT_LIMIT)
@@ -21,4 +22,6 @@ export class TrainingQuery {
   @IsNumber()
   @IsOptional()
   public page: number = DEFAULT_PAGE_COUNT;
+
+  public where: Prisma.TrainingWhereInput;
 }
