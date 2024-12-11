@@ -8,7 +8,7 @@ const initialState: TrainingsState = {
   trainings: null,
   status: RequestStatus.Idle,
   filter: {
-    sorting: DEFAULT_SORT_DIRECTION,
+    sortDirection: DEFAULT_SORT_DIRECTION,
     caloriesMax: 5000,
     caloriesMin: 0,
     ratingMax: 10,

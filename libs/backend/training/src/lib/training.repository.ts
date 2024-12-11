@@ -3,7 +3,7 @@ import { Prisma } from '@prisma/client';
 
 import { BasePostgresRepository } from '@fitfriends/data-access';
 import { PrismaClientService } from '@fitfriends/backend-models';
-import { PaginationResult, Training } from '@fitfriends/core';
+import { PaginationResult, SortDirection, Training } from '@fitfriends/core';
 import { TrainingEntity } from './training.entity';
 import { TrainingFactory } from './training.factory';
 import { TrainingQuery } from './training.query';
@@ -39,8 +39,10 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     const skip = query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
     const where: Prisma.TrainingWhereInput = {};
-    const orderBy: Prisma.TrainingOrderByWithRelationInput = query?.orderBy ? {[query?.orderBy]:query?.sortDirection}: null;
-
+    const orderBy: Prisma.TrainingOrderByWithRelationInput = query?.orderBy && query?.sortDirection !== SortDirection.Free
+      ? {[query?.orderBy]:query?.sortDirection}
+      : undefined;
+    console.log({where, skip, take, orderBy})
     const [records, postCount] = await Promise.all([
       this.client.training.findMany({where, skip, take, orderBy}),
       this.getTrainingCount(where)

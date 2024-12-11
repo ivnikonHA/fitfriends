@@ -1,4 +1,4 @@
-import { FilterType, Level, OrderBy, Sex, Time } from '@fitfriends/core';
+import { FilterType, Level, OrderBy, Sex, SortDirection, Time } from '@fitfriends/core';
 import { TrainingQuery } from '@fitfriends/training';
 
 export function getDefaultInterviewResult(sex: Sex) {
@@ -13,9 +13,13 @@ export function getDefaultInterviewResult(sex: Sex) {
 }
 
 export function getParamsString(filter: FilterType, visibleItems: number): string {
-  return `/?limit=${visibleItems}&sortDirection=${filter.sorting}&orderBy=${OrderBy.PRICE}`
+  console.log(filter.sortDirection)
+  
+  const query = new URLSearchParams(filter as unknown as Record<string, string>).toString();
+  console.log('filter:',filter)
+  return `/?limit=${visibleItems}&${query}&orderBy=price`;
 }
 
-export function createParamsString({limit, sortDirection, orderBy, page, where}: TrainingQuery) {
-  return `/?limit=${limit}&sortDirection=${sortDirection}&orderBy=${orderBy}&page=${page}&where=${where}`;
+export function createParamsString({limit, sortDirection, orderBy, page}: TrainingQuery) {
+  return `/?limit=${limit}&sortDirection=${sortDirection}&orderBy=${orderBy}&page=${page}`;
 }

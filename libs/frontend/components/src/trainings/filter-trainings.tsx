@@ -11,12 +11,23 @@ export function FilterTrainings(): JSX.Element {
   useEffect(() => {
     dispatch(changeFilter(filter));
   }, [dispatch,filter]);
+
   const handleSortChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    const value = evt.target.value;
     setFilter((prev) => ({
       ...prev,
-      sorting: evt.target.value as SortDirection
+      sortDirection: value as SortDirection
     }));
   };
+
+  const handleFreeTrainings = (evt: ChangeEvent<HTMLInputElement>) => {
+    setFilter((prev) => ({
+      ...prev,
+      priceMin: 0,
+      priceMax: 0,
+      sortDirection: evt.target.value as SortDirection
+    }));
+  }
 
   return (
     <div className="gym-catalog-form">
@@ -174,15 +185,15 @@ export function FilterTrainings(): JSX.Element {
             <h4 className="gym-catalog-form__title gym-catalog-form__title--sort">Сортировка</h4>
             <div className="btn-radio-sort gym-catalog-form__radio">
               <label>
-                <input type="radio" name="sort" value={SortDirection.Asc} onChange={handleSortChange} checked={filter.sorting===SortDirection.Asc}/>
+                <input type="radio" name="sort" value={SortDirection.Asc} onChange={handleSortChange} checked={filter.sortDirection===SortDirection.Asc}/>
                 <span className="btn-radio-sort__label">Дешевле</span>
               </label>
               <label>
-                <input type="radio" name="sort" value={SortDirection.Desc} onChange={handleSortChange} checked={filter.sorting===SortDirection.Desc}/>
+                <input type="radio" name="sort" value={SortDirection.Desc} onChange={handleSortChange} checked={filter.sortDirection===SortDirection.Desc}/>
                 <span className="btn-radio-sort__label">Дороже</span>
               </label>
               <label>
-                <input type="radio" name="sort" />
+                <input type="radio" name="sort" value={SortDirection.Free} onChange={handleFreeTrainings} checked={filter.sortDirection===SortDirection.Free}/>
                 <span className="btn-radio-sort__label">Бесплатные</span>
               </label>
             </div>

@@ -8,20 +8,29 @@ export class TrainingQuery {
   @Transform(({value}) => +value || DEFAULT_TRAINING_COUNT_LIMIT)
   @IsNumber()
   @IsOptional()
-  public limit: number = DEFAULT_TRAINING_COUNT_LIMIT;
+  public limit?: number = DEFAULT_TRAINING_COUNT_LIMIT;
 
   @IsIn(Object.values(SortDirection))
   @IsOptional()
-  public sortDirection: SortDirection = DEFAULT_SORT_DIRECTION;
+  public sortDirection?: SortDirection = DEFAULT_SORT_DIRECTION;
 
   @IsIn(Object.values(OrderBy))
   @IsOptional()
-  public orderBy: OrderBy;
+  public orderBy?: OrderBy;
 
   @Transform(({value}) => +value || DEFAULT_PAGE_COUNT)
   @IsNumber()
   @IsOptional()
-  public page: number = DEFAULT_PAGE_COUNT;
+  public page?: number = DEFAULT_PAGE_COUNT;
 
-  public where: Prisma.TrainingWhereInput;
+  @Transform(({value}) => +value )
+  @IsNumber()
+  @IsOptional()
+  public priceMin?: number;
+
+  @Transform(({value}) => +value )
+  @IsNumber()
+  @IsOptional()
+  public priceMax?: number;
+
 }

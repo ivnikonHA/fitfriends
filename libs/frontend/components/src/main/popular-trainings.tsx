@@ -20,8 +20,7 @@ export function PopularTrainings(): JSX.Element {
         limit: POPULAR_TRAINIGS_LIMIT,
         orderBy: OrderBy.RATING,
         sortDirection: SortDirection.Desc,
-        page: 1,
-        where: {}
+        page: 1
       }
     );
     dispatch(fetchTrainingsAction(queryString));

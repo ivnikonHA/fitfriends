@@ -1,4 +1,5 @@
 export enum SortDirection {
   Asc = 'asc',
-  Desc = 'desc'
+  Desc = 'desc',
+  Free = 'free'
 };
