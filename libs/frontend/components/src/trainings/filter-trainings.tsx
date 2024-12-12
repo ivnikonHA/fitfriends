@@ -1,16 +1,19 @@
 import { ChangeEvent, useEffect, useState } from 'react';
 
 import { FilterType, SortDirection } from '@fitfriends/core';
-import { useAppDispatch, useAppSelector } from '@fitfriends/hooks'
+import { useAppDispatch, useAppSelector, useDebounce } from '@fitfriends/hooks'
 import { changeFilter, getFilter } from '@fitfriends/store';
+import { Link } from 'react-router-dom';
+import { AppRoute } from '@fitfriends/utils';
 
 export function FilterTrainings(): JSX.Element {
   const dispatch = useAppDispatch();
   const [filter, setFilter] = useState<FilterType>(useAppSelector(getFilter));
+  const debouncedFilter = useDebounce(filter);
 
   useEffect(() => {
-    dispatch(changeFilter(filter));
-  }, [dispatch,filter]);
+    dispatch(changeFilter(debouncedFilter));
+  }, [dispatch,debouncedFilter]);
 
   const handleSortChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -33,22 +36,38 @@ export function FilterTrainings(): JSX.Element {
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
       <div className="gym-catalog-form__wrapper">
-        <button className="btn-flat btn-flat--underlined gym-catalog-form__btnback" type="button">
+        <Link
+          className="btn-flat btn-flat--underlined gym-catalog-form__btnback"
+          type="button"
+          to={AppRoute.Main}
+        >
           <svg width={14} height={10} aria-hidden="true">
             <use xlinkHref="#arrow-left" />
           </svg><span>Назад</span>
-        </button>
+        </Link>
         <h3 className="gym-catalog-form__title">Фильтры</h3>
         <form className="gym-catalog-form__form">
           <div className="gym-catalog-form__block gym-catalog-form__block--price">
             <h4 className="gym-catalog-form__block-title">Цена, ₽</h4>
             <div className="filter-price">
               <div className="filter-price__input-text filter-price__input-text--min">
-                <input type="number" id="text-min" name="text-min" defaultValue={0} />
+                <input
+                  type="number"
+                  id="text-min"
+                  name="text-min"
+                  onChange={(evt) => setFilter((prev) => ({...prev, priceMin: +evt.target.value}))}
+                  value={filter.priceMin.toString()}
+                />
                 <label htmlFor="text-min">от</label>
               </div>
               <div className="filter-price__input-text filter-price__input-text--max">
-                <input type="number" id="text-max" name="text-max" defaultValue={3200} />
+                <input
+                  type="number"
+                  id="text-max"
+                  name="text-max"
+                  onChange={(evt) => setFilter((prev) => ({...prev, priceMax: +evt.target.value}))}
+                  value={filter.priceMax.toString()}
+                />
                 <label htmlFor="text-max">до</label>
               </div>
             </div>

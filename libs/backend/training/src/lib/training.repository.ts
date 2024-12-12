@@ -38,10 +38,16 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
   public async find(query?: TrainingQuery): Promise<PaginationResult<TrainingEntity>> {
     const skip = query?.page && query?.limit ? (query.page - 1) * query.limit : undefined;
     const take = query?.limit;
-    const where: Prisma.TrainingWhereInput = {};
+    const where: Prisma.TrainingWhereInput = {
+      price: {
+        gte: query?.priceMin,
+        lte: query?.priceMax
+      }
+    };
     const orderBy: Prisma.TrainingOrderByWithRelationInput = query?.orderBy && query?.sortDirection !== SortDirection.Free
       ? {[query?.orderBy]:query?.sortDirection}
       : undefined;
+
     console.log({where, skip, take, orderBy})
     const [records, postCount] = await Promise.all([
       this.client.training.findMany({where, skip, take, orderBy}),
