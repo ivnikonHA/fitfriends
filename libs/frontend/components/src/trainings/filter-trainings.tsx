@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector, useDebounce } from '@fitfriends/hooks'
 import { changeFilter, getFilter } from '@fitfriends/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@fitfriends/utils';
+import { RangeSlider } from '../range-slider/range-slider';
 
 export function FilterTrainings(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -32,6 +33,7 @@ export function FilterTrainings(): JSX.Element {
     }));
   }
 
+  const [range, setRange] = useState([filter.priceMin, filter.priceMax]);
   return (
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
@@ -71,7 +73,7 @@ export function FilterTrainings(): JSX.Element {
                 <label htmlFor="text-max">до</label>
               </div>
             </div>
-            <div className="filter-range">
+            {/* <div className="filter-range">
               <div className="filter-range__scale">
                 <div className="filter-range__bar"><span className="visually-hidden">Полоса прокрутки</span></div>
               </div>
@@ -79,7 +81,16 @@ export function FilterTrainings(): JSX.Element {
                 <button className="filter-range__min-toggle"><span className="visually-hidden">Минимальное значение</span></button>
                 <button className="filter-range__max-toggle"><span className="visually-hidden">Максимальное значение</span></button>
               </div>
-            </div>
+            </div> */}
+            <RangeSlider
+              classes={{ root: "RangeSliderPage-Slider" }}
+              isShowTooltip={true}
+              max={filter.priceMax}
+              min={filter.priceMin}
+              onChange={setRange}
+              step={1}
+              value={range}
+            />
           </div>
           <div className="gym-catalog-form__block gym-catalog-form__block--calories">
             <h4 className="gym-catalog-form__block-title">Калории</h4>

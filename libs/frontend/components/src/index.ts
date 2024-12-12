@@ -8,3 +8,4 @@ export * from './main/main';
 export * from './header/header';
 export * from './public-route/public-route';
 export * from './personal-coach/personal-coach';
+export * from './range-slider/range-slider';
