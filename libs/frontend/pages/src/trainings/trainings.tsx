@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 
-import { FilterTrainings, Header, TrainingCard } from '@fitfriends/components';
+import { EmptyTraining, FilterTrainings, Header, TrainingCardsList } from '@fitfriends/components';
 import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
-import { fetchTrainingsAction, getFilter, getTrainings, getTrainingsLoadingStatus } from '@fitfriends/store';
-import { DEFAULT_TRAINING_COUNT_LIMIT } from '@fitfriends/core';
+import { fetchTrainingsAction, getFilter, getTotalPages, getTrainings, getTrainingsLoadingStatus } from '@fitfriends/store';
+import { DEFAULT_PAGE_COUNT, DEFAULT_TRAINING_COUNT_LIMIT } from '@fitfriends/core';
 import { getParamsString, RequestStatus } from '@fitfriends/utils';
 import { LoadingPage } from '../loading-page/loading-page';
 
@@ -12,22 +12,26 @@ export function Trainings() {
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
   const loadingStatus = useAppSelector(getTrainingsLoadingStatus);
-  const [visibleItems, setVisibleItems] = useState<number>(DEFAULT_TRAINING_COUNT_LIMIT);
   const filter = useAppSelector(getFilter);
 
+  const totalPages = useAppSelector(getTotalPages);
+  const [page, setPage] = useState<number>(DEFAULT_PAGE_COUNT);
+
   useEffect(() => {
-    const queryParam = getParamsString(filter, visibleItems);
+    const queryParam = getParamsString(filter, page);
     console.log(queryParam)
     dispatch(fetchTrainingsAction(queryParam))
-  }, [dispatch, visibleItems, filter]);
+  }, [dispatch, page, filter]);
 
   if(loadingStatus !== RequestStatus.Success) {
     return <LoadingPage />
   }
 
-  const handleMoreButtonClick = () => {
-    return setVisibleItems((prevState) => prevState + DEFAULT_TRAINING_COUNT_LIMIT)
-  };
+  const handleMoreButtonClick = () => setPage((prevState) => prevState !== totalPages
+    ? prevState + DEFAULT_PAGE_COUNT
+    : prevState);
+
+  const handleToTopButtonClick = () => setPage(DEFAULT_PAGE_COUNT);
 
   return (
     <div className="wrapper">
@@ -39,17 +43,20 @@ export function Trainings() {
               <h1 className="visually-hidden">Каталог тренировок</h1>
               <FilterTrainings />
               <div className="training-catalog">
-                <ul className="training-catalog__list">
-                  {trainings.map((training) => (
-                    <li className="training-catalog__item" key={training.id}>
-                      <TrainingCard training={training} />
-                    </li>
-                  ))}
-                </ul>
-                <div className="show-more training-catalog__show-more">
-                  <button className="btn show-more__button show-more__button--more" type="button" onClick={handleMoreButtonClick}>Показать еще</button>
-                  <button className="btn show-more__button show-more__button--to-top" type="button">Вернуться в начало</button>
+                { trainings.length
+                ?
+                <>
+                  <TrainingCardsList trainings={trainings} />
+                  <div className="show-more training-catalog__show-more">
+                  {
+                    page === totalPages
+                    ? <button className="btn show-more__button" type="button" onClick={handleToTopButtonClick}>Вернуться в начало</button>
+                    : <button className="btn show-more__button" type="button" onClick={handleMoreButtonClick}>Показать еще</button>
+                  }
                 </div>
+                </>
+                : <EmptyTraining />}
+
               </div>
             </div>
           </div>

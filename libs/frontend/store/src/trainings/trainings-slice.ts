@@ -29,7 +29,7 @@ export const trainingsSlice = createSlice({
   extraReducers(builder) {
     builder
       .addCase(fetchTrainingsAction.fulfilled, (state, action) => {
-        state.trainings = action.payload.entities;
+        state.trainings = action.payload;
         state.status = RequestStatus.Success;
       })
       .addCase(fetchTrainingsAction.pending, (state) => {

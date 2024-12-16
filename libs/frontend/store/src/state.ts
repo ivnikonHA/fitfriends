@@ -12,7 +12,13 @@ export type UserState = {
 }
 
 export type TrainingsState = {
-  trainings: Training[];
+  trainings: {
+    entities: Training[],
+    totalPages: number,
+    totalItems: number,
+    currentPage: number,
+    itemsPerPage: number
+  }
   status: RequestStatus;
   filter: FilterType;
 }

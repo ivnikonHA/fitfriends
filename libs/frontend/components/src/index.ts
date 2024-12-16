@@ -1,3 +1,5 @@
+export * from './training-cards-list/training-cards-list';
+export * from './empty-training/empty-training';
 export * from './personal-user/personal-user';
 export * from './user-info/user-info';
 export * from './reviews-aside/reviews-aside';
