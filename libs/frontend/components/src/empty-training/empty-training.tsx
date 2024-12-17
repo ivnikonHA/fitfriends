@@ -1,4 +1,4 @@
-import './empty-training.module.css';
+import './empty-training.css';
 
 export function EmptyTraining() {
   return (

@@ -1,21 +1,15 @@
 import {
   type ChangeEvent,
-  type Dispatch,
-  type FC,
+  Dispatch,
   memo,
-  type SetStateAction,
+  SetStateAction,
   useEffect,
   useRef,
   useState,
 } from "react";
 import "./range-slider.scss";
 
-type TClasses = {
-  root?: string;
-};
-
-type TProps = {
-  classes?: TClasses;
+type RangeSliderProps = {
   isShowTooltip?: boolean;
   max: number;
   min: number;
@@ -24,15 +18,16 @@ type TProps = {
   value: number[];
 };
 
-const RangeSliderComponent: FC<TProps> = ({
-  classes,
-  isShowTooltip = false,
-  max,
-  min,
-  onChange,
-  step,
-  value,
-}) => {
+export function RangeSliderComponent(
+  {
+    isShowTooltip = false,
+    max,
+    min,
+    onChange,
+    step,
+    value,
+  }: RangeSliderProps
+): JSX.Element {
   const [minValue, setMinValue] = useState(value[0]);
   const [maxValue, setMaxValue] = useState(value[1]);
   const [minTooltip, setMinTooltip] = useState(value[0]);
@@ -56,8 +51,8 @@ const RangeSliderComponent: FC<TProps> = ({
     ) {
       const minLeft = `${((minValue - min) / (max - min)) * 100}%`;
       const maxRight = `${((max - maxValue) / (max - min)) * 100}%`;
-      trackRef.current.style.left = minLeft;
-      trackRef.current.style.right = maxRight;
+      trackRef.current.style.left = "0%";
+      trackRef.current.style.right = "0%";
       minTooltipRef.current.style.left = minLeft;
       minTooltipRef.current.style.transform = `translateX(-${minLeft})`;
       maxTooltipRef.current.style.right = maxRight;

@@ -11,6 +11,9 @@ export function FilterTrainings(): JSX.Element {
   const dispatch = useAppDispatch();
   const [filter, setFilter] = useState<FilterType>(useAppSelector(getFilter));
   const debouncedFilter = useDebounce(filter);
+  const minPrice = filter.priceMin;
+  const maxPrice = filter.priceMax;
+  const [range, setRange] = useState([ minPrice, maxPrice]);
 
   useEffect(() => {
     dispatch(changeFilter(debouncedFilter));
@@ -33,7 +36,21 @@ export function FilterTrainings(): JSX.Element {
     }));
   }
 
-  const [range, setRange] = useState([filter.priceMin, filter.priceMax]);
+  // const handleRangeChange = (value) => {
+  //   setFilter((prev) => ({
+  //     ...prev,
+  //     priceMin: value[0],
+  //     priceMax: value[1]
+  //   }));
+  // }
+
+  // useEffect(() => {
+  //   setFilter((prev) => ({
+  //     ...prev,
+  //     priceMin: range[0],
+  //     priceMax: range[1]
+  //   }))
+  // },[debouncedRange])
   return (
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>
@@ -83,13 +100,12 @@ export function FilterTrainings(): JSX.Element {
               </div>
             </div> */}
             <RangeSlider
-              classes={{ root: "RangeSliderPage-Slider" }}
               isShowTooltip={true}
-              max={filter.priceMax}
-              min={filter.priceMin}
+              max={maxPrice}
+              min={minPrice}
               onChange={setRange}
               step={1}
-              value={range}
+              value={[filter.priceMin, filter.priceMax]}
             />
           </div>
           <div className="gym-catalog-form__block gym-catalog-form__block--calories">
