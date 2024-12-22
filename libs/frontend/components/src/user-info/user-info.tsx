@@ -1,8 +1,8 @@
 //import styles from './user-info.module.css';
 
-import { Level, Location, Role, Sex } from '@fitfriends/core';
+import { Level, Location, Role, Sex, TrainingType } from '@fitfriends/core';
 import { UserRdo } from '@fitfriends/user';
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import CustomSelect from '../custom-select';
 
 interface UserInfoProps {
@@ -17,8 +17,20 @@ export function UserInfo({userInfo}: UserInfoProps) {
     location: userInfo.location,
     sex: userInfo.sex,
     level: userInfo.level,
-    ready: true
+    ready: true,
+    trainingTypes: userInfo.trainingTypes
   });
+
+  const handleCheckboxChange = (evt: ChangeEvent<HTMLInputElement>) => {
+    let trainings = [...formData.trainingTypes];
+    const currentTraining = evt.target.value as TrainingType;
+    if (trainings.includes(currentTraining)) {
+      trainings = trainings.filter((item) => item !== currentTraining);
+    } else {
+      trainings.push(currentTraining);
+    }
+    setFormData({...formData, trainingTypes: trainings})
+  }
 
   return (
     <section className="user-info">
@@ -82,47 +94,23 @@ export function UserInfo({userInfo}: UserInfoProps) {
         </div>
         <div className="user-info__section">
           <h2 className="user-info__title user-info__title--specialization">Специализация</h2>
-          <div className="specialization-checkbox user-info__specialization">
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="yoga" /><span className="btn-checkbox__btn">Йога</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="running" /><span className="btn-checkbox__btn">Бег</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="aerobics" /><span className="btn-checkbox__btn">Аэробика</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="boxing" /><span className="btn-checkbox__btn">Бокс</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="power" /><span className="btn-checkbox__btn">Силовые</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="pilates" /><span className="btn-checkbox__btn">Пилатес</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="stretching" /><span className="btn-checkbox__btn">Стрейчинг</span>
-              </label>
-            </div>
-            <div className="btn-checkbox">
-              <label>
-                <input className="visually-hidden" type="checkbox" name="specialization" defaultValue="crossfit" /><span className="btn-checkbox__btn">Кроссфит</span>
-              </label>
-            </div>
+          <div className={`specialization-checkbox user-info__specialization`}>
+            {Object.values(TrainingType).map((item) => (
+              <div className="btn-checkbox" key={item}>
+                <label>
+                  <input
+                    className="visually-hidden"
+                    type="checkbox"
+                    name="specialisation"
+                    defaultValue={item}
+                    onChange={handleCheckboxChange}
+                    checked={formData.trainingTypes.includes(item)}
+                    disabled={!edit}
+                  />
+                  <span className="btn-checkbox__btn">{item}</span>
+                </label>
+              </div>
+            ))}
           </div>
         </div>
         <CustomSelect
