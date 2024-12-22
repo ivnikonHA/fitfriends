@@ -1,8 +1,9 @@
 //import styles from './user-info.module.css';
 
-import { Role } from '@fitfriends/core';
+import { Level, Location, Role, Sex } from '@fitfriends/core';
 import { UserRdo } from '@fitfriends/user';
 import { useState } from 'react';
+import CustomSelect from '../custom-select';
 
 interface UserInfoProps {
   userInfo: UserRdo
@@ -10,6 +11,14 @@ interface UserInfoProps {
 export function UserInfo({userInfo}: UserInfoProps) {
   const isCoach = userInfo.role === Role.COACH;
   const [edit, setEdit] = useState(false);
+  const [formData, setFormData] = useState({
+    name: userInfo.name,
+    avatar: userInfo.avatar,
+    location: userInfo.location,
+    sex: userInfo.sex,
+    level: userInfo.level,
+    ready: true
+  });
 
   return (
     <section className="user-info">
@@ -43,12 +52,16 @@ export function UserInfo({userInfo}: UserInfoProps) {
         <div className="user-info__section">
           <h2 className="user-info__title">Обо мне</h2>
           <div className="custom-input custom-input--readonly user-info__input">
-            <label><span className="custom-input__label">Имя</span><span className="custom-input__wrapper">
-                <input type="text" name="name" defaultValue={userInfo.name} disabled={!edit} /></span>
+            <label>
+              <span className="custom-input__label">Имя</span>
+              <span className="custom-input__wrapper">
+                <input type="text" name="name" defaultValue={userInfo.name} disabled={!edit} />
+              </span>
             </label>
           </div>
           <div className="custom-textarea custom-textarea--readonly user-info__textarea">
-            <label><span className="custom-textarea__label">Описание</span>
+            <label>
+              <span className="custom-textarea__label">Описание</span>
               <textarea name="description" placeholder=" " disabled={!edit} defaultValue={userInfo.description} />
             </label>
           </div>
@@ -112,43 +125,27 @@ export function UserInfo({userInfo}: UserInfoProps) {
             </div>
           </div>
         </div>
-        <div className="custom-select--readonly custom-select user-info__select"><span className="custom-select__label">Локация</span>
-          <div className="custom-select__placeholder">{userInfo?.location.toString()}</div>
-          <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled={!edit}>
-            <span className="custom-select__text" />
-            <span className="custom-select__icon">
-              <svg width={15} height={6} aria-hidden="true">
-                <use xlinkHref="#arrow-down" />
-              </svg>
-            </span>
-          </button>
-          <ul className="custom-select__list" role="listbox">
-          </ul>
-        </div>
-        <div className="custom-select--readonly custom-select user-info__select"><span className="custom-select__label">Пол</span>
-          <div className="custom-select__placeholder">{userInfo.sex}</div>
-          <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled={!edit}>
-            <span className="custom-select__text" /><span className="custom-select__icon">
-              <svg width={15} height={6} aria-hidden="true">
-                <use xlinkHref="#arrow-down" />
-              </svg>
-            </span>
-          </button>
-          <ul className="custom-select__list" role="listbox">
-          </ul>
-        </div>
-        <div className="custom-select--readonly custom-select user-info__select"><span className="custom-select__label">Уровень</span>
-          <div className="custom-select__placeholder">{userInfo.level}</div>
-          <button className="custom-select__button" type="button" aria-label="Выберите одну из опций" disabled={!edit}>
-            <span className="custom-select__text" /><span className="custom-select__icon">
-              <svg width={15} height={6} aria-hidden="true">
-                <use xlinkHref="#arrow-down" />
-              </svg>
-            </span>
-          </button>
-          <ul className="custom-select__list" role="listbox">
-          </ul>
-        </div>
+        <CustomSelect
+          label='Локация'
+          placeholder={formData.location}
+          optionsList={Object.values(Location)}
+          edit={edit}
+          onSelect={(item) => setFormData((prev) => ({...prev, location: item as Location}))}
+        />
+        <CustomSelect
+          label='Пол'
+          placeholder={formData.sex}
+          optionsList={Object.values(Sex)}
+          edit={edit}
+          onSelect={(item) => setFormData((prev) => ({...prev, sex: item as Sex}))}
+        />
+        <CustomSelect
+          label='Уровень'
+          placeholder={formData.level}
+          optionsList={Object.values(Level)}
+          edit={edit}
+          onSelect={(item) => setFormData((prev) => ({...prev, level: item as Level}))}
+        />
       </form>
     </section>
   );
