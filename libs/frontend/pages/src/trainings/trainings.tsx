@@ -2,8 +2,14 @@ import { useEffect, useState } from 'react';
 
 import { EmptyTraining, FilterTrainings, Header, TrainingCardsList } from '@fitfriends/components';
 import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
-import { fetchTrainingsAction, getFilter, getTotalPages, getTrainings, getTrainingsLoadingStatus } from '@fitfriends/store';
-import { DEFAULT_PAGE_COUNT, DEFAULT_TRAINING_COUNT_LIMIT } from '@fitfriends/core';
+import {
+  fetchTrainingsAction,
+  getFilter,
+  getTotalPages,
+  getTrainings,
+  getTrainingsLoadingStatus
+} from '@fitfriends/store';
+import { DEFAULT_PAGE_COUNT } from '@fitfriends/core';
 import { getParamsString, RequestStatus } from '@fitfriends/utils';
 import { LoadingPage } from '../loading-page/loading-page';
 
@@ -11,6 +17,7 @@ import { LoadingPage } from '../loading-page/loading-page';
 export function Trainings() {
   const dispatch = useAppDispatch();
   const trainings = useAppSelector(getTrainings);
+
   const loadingStatus = useAppSelector(getTrainingsLoadingStatus);
   const filter = useAppSelector(getFilter);
 
@@ -19,7 +26,6 @@ export function Trainings() {
 
   useEffect(() => {
     const queryParam = getParamsString(filter, page);
-    console.log(queryParam)
     dispatch(fetchTrainingsAction(queryParam))
   }, [dispatch, page, filter]);
 

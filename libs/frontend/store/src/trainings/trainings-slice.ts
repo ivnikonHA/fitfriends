@@ -23,7 +23,9 @@ export const trainingsSlice = createSlice({
   initialState,
   reducers: {
     changeFilter: (state, action) => {
-      state.filter = action.payload;
+      if(state.status === RequestStatus.Success) {
+        state.filter = action.payload;
+      }
     }
   },
   extraReducers(builder) {

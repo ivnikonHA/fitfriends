@@ -17,7 +17,11 @@ export type TrainingsState = {
     totalPages: number,
     totalItems: number,
     currentPage: number,
-    itemsPerPage: number
+    itemsPerPage: number,
+    minCalories: number,
+    maxCalories: number,
+    minPrice: number,
+    maxPrice: number
   }
   status: RequestStatus;
   filter: FilterType;

@@ -6,4 +6,8 @@ export interface PaginationResult<T extends Entity> {
   totalItems: number;
   currentPage: number;
   itemsPerPage: number;
+  minCalories: number;
+  maxCalories: number;
+  minPrice: number;
+  maxPrice: number;
 }

@@ -7,6 +7,10 @@ const getTotalPages = (state: State): number => state[NameSpace.Trainings].train
 const getTotalItems = (state: State): number => state[NameSpace.Trainings].trainings?.totalItems;
 const getCurrentPage = (state: State): number => state[NameSpace.Trainings].trainings?.currentPage;
 const getItemsPerPage = (state: State): number => state[NameSpace.Trainings].trainings?.itemsPerPage;
+const getMinCalories = (state: State): number => state[NameSpace.Trainings].trainings?.minCalories;
+const getMaxCalories = (state: State): number => state[NameSpace.Trainings].trainings?.maxCalories;
+const getMinPrice = (state: State): number => state[NameSpace.Trainings].trainings?.minPrice;
+const getMaxPrice = (state: State): number => state[NameSpace.Trainings].trainings?.maxPrice;
 const getTrainingsLoadingStatus = (state: State): RequestStatus => state[NameSpace.Trainings].status;
 const getFilter = (state: State): FilterType => state[NameSpace.Trainings].filter;
 
@@ -14,6 +18,10 @@ export {
   getTrainings,
   getCurrentPage,
   getItemsPerPage,
+  getMinCalories,
+  getMaxCalories,
+  getMinPrice,
+  getMaxPrice,
   getTotalItems,
   getTotalPages,
   getTrainingsLoadingStatus,

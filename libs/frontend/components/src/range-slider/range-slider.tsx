@@ -18,7 +18,7 @@ type RangeSliderProps = {
   value: number[];
 };
 
-export function RangeSliderComponent(
+function RangeSliderComponent(
   {
     isShowTooltip = false,
     max,
@@ -41,6 +41,14 @@ export function RangeSliderComponent(
   const zIndexMax = "20";
 
   useEffect(() => {
+    setMinValue(value[0]);
+    setMaxValue(value[1]);
+    setMinTooltip(value[0]);
+    setMaxTooltip(value[1]);
+  }, [value])
+
+  useEffect(() => {
+    console.log('Slider useeffect')
     if (
       trackRef &&
       trackRef.current &&

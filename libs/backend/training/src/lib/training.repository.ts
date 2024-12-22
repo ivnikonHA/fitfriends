@@ -21,9 +21,23 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
     return this.client.training.count({where});
   }
 
+  private async getMinMaxValues() {
+    return this.client.training.aggregate({
+      _max: {
+        calories: true,
+        price: true
+      },
+      _min: {
+        calories: true,
+        price: true
+      }
+    })
+  }
+
   private calculateTrainingPage(totalCount: number, limit: number): number {
     return Math.ceil(totalCount / limit);
   }
+
 
   public async save(entity: TrainingEntity): Promise<TrainingEntity> {
     const record = await this.client.training.create({
@@ -49,9 +63,10 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       : undefined;
 
     console.log({where, skip, take, orderBy})
-    const [records, postCount] = await Promise.all([
+    const [records, postCount, minMaxValues] = await Promise.all([
       this.client.training.findMany({where, skip, take, orderBy}),
-      this.getTrainingCount(where)
+      this.getTrainingCount(where),
+      this.getMinMaxValues()
     ]);
 
     return {
@@ -59,7 +74,11 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       currentPage: query?.page,
       totalPages: this.calculateTrainingPage(postCount, take),
       itemsPerPage: take,
-      totalItems: postCount
+      totalItems: postCount,
+      minCalories: minMaxValues._min.calories,
+      maxCalories: minMaxValues._max.calories,
+      minPrice: minMaxValues._min.price,
+      maxPrice: minMaxValues._max.price
     }
   }
 

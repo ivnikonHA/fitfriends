@@ -1,23 +1,47 @@
-import { ChangeEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'react';
 
 import { FilterType, SortDirection } from '@fitfriends/core';
 import { useAppDispatch, useAppSelector, useDebounce } from '@fitfriends/hooks'
-import { changeFilter, getFilter } from '@fitfriends/store';
+import { changeFilter, getFilter, getMaxCalories, getMaxPrice, getMinCalories, getMinPrice } from '@fitfriends/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@fitfriends/utils';
 import { RangeSlider } from '../range-slider/range-slider';
 
+// interface FilterTrainingsProps {
+//   filter: FilterType;
+//   setFilter: Dispatch<SetStateAction<FilterType>>;
+// }
+
 export function FilterTrainings(): JSX.Element {
   const dispatch = useAppDispatch();
   const [filter, setFilter] = useState<FilterType>(useAppSelector(getFilter));
-  const debouncedFilter = useDebounce(filter);
-  const minPrice = filter.priceMin;
-  const maxPrice = filter.priceMax;
-  const [range, setRange] = useState([ minPrice, maxPrice]);
+  const debouncedFilter = useDebounce(filter, 1000);
+  const minPrice = useAppSelector(getMinPrice);
+  const maxPrice = useAppSelector(getMaxPrice);
+  const minCalories = useAppSelector(getMinCalories);
+  const maxCalories = useAppSelector(getMaxCalories);
+  const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
+  const debouncedPriceRange = useDebounce(priceRange, 1000);
 
-  useEffect(() => {
-    dispatch(changeFilter(debouncedFilter));
-  }, [dispatch,debouncedFilter]);
+  // useEffect(() => setFilter((prev) => ({
+  //   ...prev,
+  //   caloriesMin: minCalories,
+  //   caloriesMax: maxCalories,
+  //   priceMin: minPrice,
+  //   priceMax: maxPrice
+  // })),[]);
+
+  // useEffect(() => {
+  //   dispatch(changeFilter(debouncedFilter));
+  // }, [debouncedFilter]);
+
+  // useEffect(() => {
+  //   setFilter((prev) => ({
+  //     ...prev,
+  //     priceMin: debouncedPriceRange[0],
+  //     priceMax: debouncedPriceRange[1]
+  //   }));
+  // },[debouncedPriceRange]);
 
   const handleSortChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -35,7 +59,7 @@ export function FilterTrainings(): JSX.Element {
       sortDirection: evt.target.value as SortDirection
     }));
   }
-
+  console.log(priceRange)
   // const handleRangeChange = (value) => {
   //   setFilter((prev) => ({
   //     ...prev,
@@ -74,8 +98,8 @@ export function FilterTrainings(): JSX.Element {
                   type="number"
                   id="text-min"
                   name="text-min"
-                  onChange={(evt) => setFilter((prev) => ({...prev, priceMin: +evt.target.value}))}
-                  value={filter.priceMin.toString()}
+                  onChange={(evt) => setPriceRange((prev) => ([+evt.target.value, prev[1]]))}
+                  value={priceRange[0].toString()}
                 />
                 <label htmlFor="text-min">от</label>
               </div>
@@ -84,8 +108,8 @@ export function FilterTrainings(): JSX.Element {
                   type="number"
                   id="text-max"
                   name="text-max"
-                  onChange={(evt) => setFilter((prev) => ({...prev, priceMax: +evt.target.value}))}
-                  value={filter.priceMax.toString()}
+                  onChange={(evt) => setPriceRange((prev) => ([prev[0], +evt.target.value]))}
+                  value={priceRange[1].toString()}
                 />
                 <label htmlFor="text-max">до</label>
               </div>
@@ -103,9 +127,9 @@ export function FilterTrainings(): JSX.Element {
               isShowTooltip={true}
               max={maxPrice}
               min={minPrice}
-              onChange={setRange}
+              onChange={setPriceRange}
               step={1}
-              value={[filter.priceMin, filter.priceMax]}
+              value={priceRange}
             />
           </div>
           <div className="gym-catalog-form__block gym-catalog-form__block--calories">

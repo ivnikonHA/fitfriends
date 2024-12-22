@@ -16,4 +16,16 @@ export class TrainingWithPagination {
 
   @Expose()
   public itemsPerPage: number;
+
+  @Expose()
+  public minCalories: number;
+
+  @Expose()
+  public maxCalories: number;
+
+  @Expose()
+  public minPrice: number;
+
+  @Expose()
+  public maxPrice: number;
 }
