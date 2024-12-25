@@ -10,6 +10,7 @@ export const enum AppRoute {
 }
 
 export const enum APIRoute {
+  Balance = '/balance',
   Login = '/user/login',
   Logout = '/user/logout',
   Register = 'user/register',

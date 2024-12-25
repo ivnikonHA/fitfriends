@@ -1,3 +1,4 @@
+export * from './popup-buy/popup-buy';
 export * from './custom-select/custom-select';
 export * from './training-cards-list/training-cards-list';
 export * from './empty-training/empty-training';

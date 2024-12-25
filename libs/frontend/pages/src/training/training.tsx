@@ -1,13 +1,15 @@
 import './training.css';
 import { Helmet } from 'react-helmet-async';
 
-import { Header, ReviewsAside } from '@fitfriends/components';
+import { Header, PopupBuy, ReviewsAside } from '@fitfriends/components';
 import { Training } from '@fitfriends/core';
 import { useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 export function TrainingPage() {
   const location = useLocation();
   const training: Training = location.state.training;
+  const [popupVisible, setPopupVisible] = useState(false);
 
   return (
     <div className="wrapper">
@@ -88,7 +90,12 @@ export function TrainingPage() {
                             </label>
                             <div className="training-info__error">Введите число</div>
                           </div>
-                          <button className="btn training-info__buy" type="button">Купить</button>
+                          <button
+                            className="btn training-info__buy"
+                            type="button"
+                            onClick={() => setPopupVisible(true)}
+                          >Купить</button>
+                          { popupVisible && <PopupBuy training={training} onClose={() => setPopupVisible(false)}/> }
                         </div>
                       </div>
                     </form>

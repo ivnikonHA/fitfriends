@@ -4,8 +4,8 @@ import { AxiosInstance } from 'axios';
 import { Token, TokenPayload } from '@fitfriends/core';
 import { APIRoute } from '@fitfriends/utils';
 import { dropToken, saveToken } from '@fitfriends/services';
-import { CreateUserDto, LoggedUserRdo, LoginUserDto, UserRdo } from '@fitfriends/user';
-import { UpdateUserDto } from 'libs/backend/account/user/src/lib/dto/update-user.dto';
+import { CreateUserDto, LoggedUserRdo, LoginUserDto, UpdateUserDto, UserRdo } from '@fitfriends/user';
+import { BalanceRdo, IncreaseBalanceDto } from '@fitfriends/balance';
 import { TrainingWithPagination } from '@fitfriends/training';
 
 const checkAuthAction = createAsyncThunk<
@@ -69,8 +69,16 @@ const fetchTrainingsAction = createAsyncThunk<TrainingWithPagination, string, {e
   }
 )
 
+const buyTrainingAction = createAsyncThunk<BalanceRdo, IncreaseBalanceDto, {extra: AxiosInstance}>(
+  'balance/increase',
+  async (dto, {extra: api}) => {
+    const { data } = await api.post<IncreaseBalanceDto>(`${APIRoute.Balance}`, dto);
+    return data;
+  }
+)
 
 export {
+  buyTrainingAction,
   checkAuthAction,
   loginAction,
   logoutAction,
