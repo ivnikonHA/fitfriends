@@ -38,7 +38,6 @@ export function UserInfo({userInfo}: UserInfoProps) {
       return;
     }
     setPhoto(evt.target.files[0]);
-    console.log(photo);
   };
 
   const handleCheckboxChange = (evt: ChangeEvent<HTMLInputElement>) => {
@@ -89,6 +88,8 @@ export function UserInfo({userInfo}: UserInfoProps) {
             <span className="input-load-avatar__avatar">
             {
               photo ? <img src={URL.createObjectURL(photo)} width="98" height="98" alt="user" />
+              : formData.avatar
+              ? <img src={`http://localhost:3001/static/${formData.avatar}`} width="98" height="98" alt="user" />
               : <svg width={20} height={20} aria-hidden="true"><use xlinkHref="#icon-import" /></svg>
             }
             </span>

@@ -75,7 +75,6 @@ export function Register() {
       dateOfBirth: new Date(formData.dateOfBirth),
       ...interviewData
     };
-    console.log(dto)
     dispatch(registerAction(dto))
     .then(() => dispatch(loginAction({email: formData.email, password: formData.password})))
     .then(() => navigate(AppRoute.Interview));
