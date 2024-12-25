@@ -69,6 +69,14 @@ const fetchTrainingsAction = createAsyncThunk<TrainingWithPagination, string, {e
   }
 )
 
+const fetchUserBalanceAction = createAsyncThunk<BalanceRdo[], undefined, {extra: AxiosInstance}>(
+  'balance/fetch',
+  async (_arg, {extra: api}) => {
+    const { data } = await api.get<BalanceRdo[]>(APIRoute.Balance);
+    return data;
+  }
+)
+
 const buyTrainingAction = createAsyncThunk<BalanceRdo, IncreaseBalanceDto, {extra: AxiosInstance}>(
   'balance/increase',
   async (dto, {extra: api}) => {
@@ -80,10 +88,11 @@ const buyTrainingAction = createAsyncThunk<BalanceRdo, IncreaseBalanceDto, {extr
 export {
   buyTrainingAction,
   checkAuthAction,
+  fetchUserBalanceAction,
+  fetchTrainingsAction,
+  fetchUserAction,
   loginAction,
   logoutAction,
   registerAction,
   updateUserAction,
-  fetchUserAction,
-  fetchTrainingsAction
 };

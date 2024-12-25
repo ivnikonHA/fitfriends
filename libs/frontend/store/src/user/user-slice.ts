@@ -2,13 +2,14 @@ import { createSlice } from '@reduxjs/toolkit';
 
 import { AuthorizationStatus, NameSpace } from '@fitfriends/utils';
 import { UserState } from '../state';
-import { checkAuthAction, fetchUserAction, loginAction, logoutAction } from '../api-actions';
+import { checkAuthAction, fetchUserAction, fetchUserBalanceAction, loginAction, logoutAction } from '../api-actions';
 import { dropToken } from '@fitfriends/services';
 
 const initialState: UserState = {
   authorizationStatus: AuthorizationStatus.Unknown,
   userData: null,
-  userInfo: null
+  userInfo: null,
+  userBalance: []
 };
 
 export const userSlice = createSlice({
@@ -25,6 +26,12 @@ export const userSlice = createSlice({
         dropToken();
         state.authorizationStatus = AuthorizationStatus.NoAuth;
       })
+      .addCase(fetchUserBalanceAction.fulfilled, (state, action) => {
+        state.userBalance = action.payload;
+      })
+      .addCase(fetchUserAction.fulfilled, (state, action) => {
+        state.userInfo = action.payload;
+      })
       .addCase(loginAction.fulfilled, (state, action) => {
         state.authorizationStatus = AuthorizationStatus.Auth;
         state.userData = action.payload;
@@ -34,9 +41,6 @@ export const userSlice = createSlice({
       })
       .addCase(logoutAction.fulfilled, (state) => {
         state.authorizationStatus = AuthorizationStatus.NoAuth;
-      })
-      .addCase(fetchUserAction.fulfilled, (state, action) => {
-        state.userInfo = action.payload;
       })
   },
 });

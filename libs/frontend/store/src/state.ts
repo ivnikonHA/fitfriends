@@ -4,11 +4,13 @@ import { AuthorizationStatus, RequestStatus } from '@fitfriends/utils';
 import { store } from './store';
 import { LoggedUserRdo, UserRdo } from '@fitfriends/user';
 import { FilterType, Training } from '@fitfriends/core';
+import { BalanceRdo } from '@fitfriends/balance';
 
 export type UserState = {
   authorizationStatus: AuthorizationStatus;
   userData: LoggedUserRdo;
   userInfo: UserRdo;
+  userBalance: BalanceRdo[];
 }
 
 export type TrainingsState = {

@@ -1,15 +1,22 @@
 import './training.css';
+import { useEffect, useState } from 'react';
 import { Helmet } from 'react-helmet-async';
+import { useLocation } from 'react-router-dom';
 
 import { Header, PopupBuy, ReviewsAside } from '@fitfriends/components';
 import { Training } from '@fitfriends/core';
-import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useAppDispatch, useAppSelector } from '@fitfriends/hooks';
+import { fetchUserBalanceAction, getUserBalance } from '@fitfriends/store';
 
 export function TrainingPage() {
+  const dispatch = useAppDispatch();
   const location = useLocation();
   const training: Training = location.state.training;
+  const trainingQty = useAppSelector(getUserBalance).filter((item) => item.trainingId === training.id)[0]?.quantity || 0;
   const [popupVisible, setPopupVisible] = useState(false);
+
+  useEffect(() => {dispatch(fetchUserBalanceAction())}, [dispatch]);
+  console.log(trainingQty)
 
   return (
     <div className="wrapper">
@@ -117,7 +124,7 @@ export function TrainingPage() {
                     </button>
                   </div>
                   <div className="training-video__buttons-wrapper">
-                    <button className="btn training-video__button training-video__button--start" type="button" disabled>Приступить</button>
+                    <button className="btn training-video__button training-video__button--start" type="button" disabled={trainingQty < 1}>Приступить</button>
                     <button className="btn training-video__button training-video__button--stop" type="button">Закончить</button>
                   </div>
                 </div>
