@@ -65,7 +65,6 @@ export function UserInfo({userInfo}: UserInfoProps) {
         avatar
       }
       dispatch(updateUserAction(dto)).catch((e) => {
-        console.log(e);
         return;
       });
     }

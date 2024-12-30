@@ -1,13 +1,21 @@
+import { Link } from 'react-router-dom';
+
+import { AppRoute } from '@fitfriends/utils';
 
 
 export function ReviewsAside() {
   return (
     <aside className="reviews-side-bar">
-      <button className="btn-flat btn-flat--underlined reviews-side-bar__back" type="button">
+      <Link
+        className="btn-flat btn-flat--underlined reviews-side-bar__back"
+        type="button"
+        to={AppRoute.Main}
+      >
         <svg width={14} height={10} aria-hidden="true">
           <use xlinkHref="#arrow-left" />
-        </svg><span>Назад</span>
-      </button>
+        </svg>
+        <span>Назад</span>
+      </Link>
       <h2 className="reviews-side-bar__title">Отзывы</h2>
       <ul className="reviews-side-bar__list">
         <li className="reviews-side-bar__item">

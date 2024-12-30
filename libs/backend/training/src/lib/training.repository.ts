@@ -62,7 +62,6 @@ export class TrainingRepository extends BasePostgresRepository<TrainingEntity, T
       ? {[query?.orderBy]:query?.sortDirection}
       : undefined;
 
-    console.log({where, skip, take, orderBy})
     const [records, postCount, minMaxValues] = await Promise.all([
       this.client.training.findMany({where, skip, take, orderBy}),
       this.getTrainingCount(where),

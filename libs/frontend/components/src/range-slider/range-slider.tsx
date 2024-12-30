@@ -48,7 +48,6 @@ function RangeSliderComponent(
   }, [value])
 
   useEffect(() => {
-    console.log('Slider useeffect')
     if (
       trackRef &&
       trackRef.current &&

@@ -16,7 +16,6 @@ export function TrainingPage() {
   const [popupVisible, setPopupVisible] = useState(false);
 
   useEffect(() => {dispatch(fetchUserBalanceAction())}, [dispatch]);
-  console.log(trainingQty)
 
   return (
     <div className="wrapper">

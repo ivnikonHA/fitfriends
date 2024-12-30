@@ -2,46 +2,19 @@ import { ChangeEvent, Dispatch, SetStateAction, useEffect, useState } from 'reac
 
 import { FilterType, SortDirection } from '@fitfriends/core';
 import { useAppDispatch, useAppSelector, useDebounce } from '@fitfriends/hooks'
-import { changeFilter, getFilter, getMaxCalories, getMaxPrice, getMinCalories, getMinPrice } from '@fitfriends/store';
+import { getFilter, getMaxCalories, getMaxPrice, getMinCalories, getMinPrice } from '@fitfriends/store';
 import { Link } from 'react-router-dom';
 import { AppRoute } from '@fitfriends/utils';
 import { RangeSlider } from '../range-slider/range-slider';
 
-// interface FilterTrainingsProps {
-//   filter: FilterType;
-//   setFilter: Dispatch<SetStateAction<FilterType>>;
-// }
-
 export function FilterTrainings(): JSX.Element {
   const dispatch = useAppDispatch();
   const [filter, setFilter] = useState<FilterType>(useAppSelector(getFilter));
-  const debouncedFilter = useDebounce(filter, 1000);
+
   const minPrice = useAppSelector(getMinPrice);
   const maxPrice = useAppSelector(getMaxPrice);
-  const minCalories = useAppSelector(getMinCalories);
-  const maxCalories = useAppSelector(getMaxCalories);
+
   const [priceRange, setPriceRange] = useState([minPrice, maxPrice]);
-  const debouncedPriceRange = useDebounce(priceRange, 1000);
-
-  // useEffect(() => setFilter((prev) => ({
-  //   ...prev,
-  //   caloriesMin: minCalories,
-  //   caloriesMax: maxCalories,
-  //   priceMin: minPrice,
-  //   priceMax: maxPrice
-  // })),[]);
-
-  // useEffect(() => {
-  //   dispatch(changeFilter(debouncedFilter));
-  // }, [debouncedFilter]);
-
-  // useEffect(() => {
-  //   setFilter((prev) => ({
-  //     ...prev,
-  //     priceMin: debouncedPriceRange[0],
-  //     priceMax: debouncedPriceRange[1]
-  //   }));
-  // },[debouncedPriceRange]);
 
   const handleSortChange = (evt: ChangeEvent<HTMLInputElement>) => {
     const value = evt.target.value;
@@ -59,22 +32,7 @@ export function FilterTrainings(): JSX.Element {
       sortDirection: evt.target.value as SortDirection
     }));
   }
-  console.log(priceRange)
-  // const handleRangeChange = (value) => {
-  //   setFilter((prev) => ({
-  //     ...prev,
-  //     priceMin: value[0],
-  //     priceMax: value[1]
-  //   }));
-  // }
 
-  // useEffect(() => {
-  //   setFilter((prev) => ({
-  //     ...prev,
-  //     priceMin: range[0],
-  //     priceMax: range[1]
-  //   }))
-  // },[debouncedRange])
   return (
     <div className="gym-catalog-form">
       <h2 className="visually-hidden">Мои тренировки Фильтр</h2>

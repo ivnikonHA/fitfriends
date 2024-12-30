@@ -1,4 +1,4 @@
-import { DEFAULT_TRAINING_COUNT_LIMIT, FilterType, Level, OrderBy, Sex, SortDirection, Time } from '@fitfriends/core';
+import { DEFAULT_TRAINING_COUNT_LIMIT, FilterType, Level, Sex, Time } from '@fitfriends/core';
 import { TrainingQuery } from '@fitfriends/training';
 
 export function getDefaultInterviewResult(sex: Sex) {
@@ -13,10 +13,7 @@ export function getDefaultInterviewResult(sex: Sex) {
 }
 
 export function getParamsString(filter: FilterType, page: number): string {
-  console.log(filter.sortDirection)
-
   const query = new URLSearchParams(filter as unknown as Record<string, string>).toString();
-  console.log('filter:',filter)
   return `/?limit=${DEFAULT_TRAINING_COUNT_LIMIT}&${query}&orderBy=price&page=${page}`;
 }
 
